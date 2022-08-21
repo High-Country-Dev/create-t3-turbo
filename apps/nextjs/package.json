@@ -3,40 +3,52 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "postinstall": "prisma generate"
+    "build": "pnpm with-env next build",
+    "clean": "git clean -xdf .next .turbo node_modules",
+    "dev": "pnpm with-env next dev",
+    "lint": "dotenv -v SKIP_ENV_VALIDATION=1 next lint",
+    "lint:fix": "pnpm lint --fix",
+    "start": "pnpm with-env next start",
+    "type-check": "tsc --noEmit",
+    "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
-    "next": "12.2.5",
+    "@acme/api": "^0.1.0",
+    "@acme/auth": "^0.1.0",
+    "@acme/db": "^0.1.0",
+    "@t3-oss/env-nextjs": "^0.6.0",
+    "@tanstack/react-query": "^4.32.0",
+    "@tanstack/react-query-devtools": "^4.32.0",
+    "@tanstack/react-query-next-experimental": "5.0.0-alpha.80",
+    "@trpc/client": "^10.36.0",
+    "@trpc/next": "^10.36.0",
+    "@trpc/react-query": "^10.36.0",
+    "@trpc/server": "^10.36.0",
+    "next": "^13.4.12",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "zod": "^3.18.0",
-    "@prisma/client": "^4.1.0",
-    "react-query": "^3.39.2",
-    "superjson": "^1.9.1",
-    "@trpc/server": "10.0.0-alpha.41",
-    "@trpc/client": "10.0.0-alpha.41",
-    "@trpc/next": "10.0.0-alpha.41",
-    "@trpc/react": "10.0.0-alpha.41"
+    "superjson": "1.13.1",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@types/node": "18.0.0",
-    "@types/react": "18.0.14",
-    "@types/react-dom": "18.0.5",
-    "@typescript-eslint/eslint-plugin": "^5.33.0",
-    "@typescript-eslint/parser": "^5.33.0",
-    "eslint": "8.22.0",
-    "eslint-config-next": "12.2.5",
-    "typescript": "4.7.4",
-    "prisma": "^4.1.0",
-    "tailwindcss": "^3.1.6",
-    "postcss": "^8.4.14",
-    "autoprefixer": "^10.4.7"
+    "@acme/eslint-config": "^0.2.0",
+    "@acme/tailwind-config": "^0.1.0",
+    "@types/node": "^18.17.1",
+    "@types/react": "^18.2.17",
+    "@types/react-dom": "^18.2.7",
+    "autoprefixer": "^10.4.14",
+    "dotenv-cli": "^7.2.1",
+    "eslint": "^8.45.0",
+    "postcss": "^8.4.26",
+    "tailwindcss": "3.3.2",
+    "typescript": "^5.1.6"
   },
-  "ct3aMetadata": {
-    "initVersion": "6.0.0-next.e267c33"
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@acme/eslint-config/base",
+      "@acme/eslint-config/nextjs",
+      "@acme/eslint-config/react"
+    ]
   }
 }

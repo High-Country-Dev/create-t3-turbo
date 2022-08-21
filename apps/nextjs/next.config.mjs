@@ -1,19 +1,15 @@
-// @ts-check
-import { env } from "./src/env/server.mjs";
+// Importing env files here to validate on build
+import "./src/env.mjs";
+import "@acme/auth/env.mjs";
 
-/**
- * Don't be scared of the generics here.
- * All they do is to give us autocompletion when using this.
- *
- * @template {import('next').NextConfig} T
- * @param {T} config - A generic parameter that flows through to the return type
- * @constraint {{import('next').NextConfig}}
- */
-function defineNextConfig(config) {
-  return config;
-}
-
-export default defineNextConfig({
+/** @type {import("next").NextConfig} */
+const config = {
   reactStrictMode: true,
-  swcMinify: true,
-});
+  /** Enables hot reloading for local packages without a build step */
+  transpilePackages: ["@acme/api", "@acme/auth", "@acme/db"],
+  /** We already do linting and typechecking as separate tasks in CI */
+  eslint: { ignoreDuringBuilds: true },
+  typescript: { ignoreBuildErrors: true },
+};
+
+export default config;
