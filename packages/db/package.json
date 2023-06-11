@@ -14,9 +14,11 @@
   "dependencies": {
     "@acme/common": "^0.1.0",
     "@prisma/client": "^4.15.0",
+    "lodash": "^4.17.21",
     "zod-prisma": "^0.5.4"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.195",
     "dotenv-cli": "^7.2.1",
     "prisma": "^4.15.0",
     "typescript": "^5.1.3"

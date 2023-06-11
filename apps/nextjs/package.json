@@ -23,6 +23,7 @@
     "@trpc/next": "^10.27.1",
     "@trpc/react-query": "^10.27.1",
     "@trpc/server": "^10.27.1",
+    "lodash": "^4.17.21",
     "next": "^13.4.4",
     "next-auth": "^4.22.1",
     "react": "18.2.0",
@@ -33,6 +34,7 @@
   "devDependencies": {
     "@acme/eslint-config": "^0.1.0",
     "@acme/tailwind-config": "^0.1.0",
+    "@types/lodash": "^4.14.195",
     "@types/node": "^18.16.5",
     "@types/react": "^18.2.8",
     "@types/react-dom": "^18.2.4",

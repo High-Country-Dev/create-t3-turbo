@@ -10,9 +10,12 @@
     "lint:fix": "pnpm lint --fix",
     "type-check": "tsc --noEmit"
   },
-  "dependencies": {},
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
   "devDependencies": {
     "@acme/eslint-config": "^0.1.0",
+    "@types/lodash": "^4.14.195",
     "eslint": "^8.42.0",
     "typescript": "^5.1.3"
   }
