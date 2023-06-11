@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "@acme/common": "^0.1.0",
+    "@prisma/client": "^4.15.0",
+    "zod-prisma": "^0.5.4"
   },
   "devDependencies": {
     "dotenv-cli": "^7.2.1",

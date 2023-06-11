@@ -11,6 +11,15 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+generator zod {
+    provider      = "zod-prisma"
+    output        = "../../api/src/types/zod"
+    relationModel = false
+    modelCase     = "PascalCase"
+    modelSuffix   = "Model"
+    imports       = "../../api/src/types/helpers"
+}
+
 model Post {
     id      String @id @default(cuid())
     title   String
