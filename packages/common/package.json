@@ -1,5 +1,5 @@
 {
-  "name": "@acme/api",
+  "name": "@acme/common",
   "version": "0.1.0",
   "main": "./index.ts",
   "types": "./index.ts",
@@ -10,15 +10,7 @@
     "lint:fix": "pnpm lint --fix",
     "type-check": "tsc --noEmit"
   },
-  "dependencies": {
-    "@acme/auth": "^0.1.0",
-    "@acme/common": "^0.1.0",
-    "@acme/db": "^0.1.0",
-    "@trpc/client": "^10.27.1",
-    "@trpc/server": "^10.27.1",
-    "superjson": "1.9.1",
-    "zod": "^3.21.4"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@acme/eslint-config": "^0.1.0",
     "eslint": "^8.42.0",
