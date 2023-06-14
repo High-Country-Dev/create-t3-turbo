@@ -12,6 +12,12 @@ npx create-turbo@latest -e https://github.com/t3-oss/create-t3-turbo
 
 Then change prettier.config.cjs to ACTUALS. We don't change this on the template since it causes so many merge conflicts
 
+OPTIONAL: refactor the following for consistency with older projects
+
+- @acme -> @mono
+- nextjs -> www
+- expo -> mobile
+
 ## About
 
 Ever wondered how to migrate your T3 application into a monorepo? Stop right here! This is the perfect starter repo to get you running with the perfect stack!
