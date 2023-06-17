@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "../trpc";
+import { ListPostsModel } from "../types/schema/post";
 
 export const postRouter = createTRPCRouter({
   all: publicProcedure.query(({ ctx }) => {
@@ -24,4 +25,11 @@ export const postRouter = createTRPCRouter({
   delete: publicProcedure.input(z.string()).mutation(({ ctx, input }) => {
     return ctx.prisma.post.delete({ where: { id: input } });
   }),
+  openApiAllPosts: publicProcedure
+    .meta({ openapi: { method: "GET", path: "/posts" } })
+    .input(z.object({}).passthrough().optional())
+    .output(ListPostsModel)
+    .query(({ ctx }) => {
+      return ctx.prisma.post.findMany({ orderBy: { id: "desc" } });
+    }),
 });
