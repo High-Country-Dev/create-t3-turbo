@@ -19,6 +19,7 @@
     "@trpc/client": "^10.27.1",
     "@trpc/react-query": "^10.27.1",
     "@trpc/server": "^10.27.1",
+    "eas-cli": "^3.14.0",
     "expo": "^48.0.19",
     "expo-constants": "~14.2.1",
     "expo-linking": "~4.0.1",

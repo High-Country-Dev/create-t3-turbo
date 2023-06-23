@@ -9,7 +9,7 @@
         "resourceClass": "m-medium"
       }
     },
-    "development": {
+    "dev": {
       "extends": "base",
       "developmentClient": true,
       "distribution": "internal"
@@ -21,11 +21,22 @@
         "simulator": true
       }
     },
-    "production": {
+    "prod": {
       "extends": "base"
     }
   },
   "submit": {
-    "production": {}
+    "staging": {
+      "android": {
+        "track": "internal",
+        "releaseStatus": "completed"
+      },
+      "ios": {
+        "ascAppId": "1640693113"
+      }
+    },
+    "prod": {
+      "extends": "staging"
+    }
   }
 }

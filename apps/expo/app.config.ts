@@ -1,10 +1,13 @@
 import type { ExpoConfig } from "@expo/config";
 
+const versionCode = 5;
+
 const defineConfig = (): ExpoConfig => ({
-  name: "expo",
-  slug: "expo",
-  scheme: "expo",
+  name: "t3template",
+  slug: "t3template",
+  scheme: "t3template",
   version: "1.0.0",
+  owner: "mountain_dev",
   orientation: "portrait",
   icon: "./assets/icon.png",
   userInterfaceStyle: "light",
@@ -19,17 +22,21 @@ const defineConfig = (): ExpoConfig => ({
   assetBundlePatterns: ["**/*"],
   ios: {
     supportsTablet: true,
-    bundleIdentifier: "your.bundle.identifier",
+    bundleIdentifier: "com.mountaindev.t3template",
+    buildNumber: versionCode.toString(),
   },
   android: {
+    package: "com.mountaindev.t3template",
     adaptiveIcon: {
       foregroundImage: "./assets/icon.png",
       backgroundColor: "#1F104A",
     },
+    versionCode,
   },
   extra: {
     eas: {
-      // projectId: "your-project-id",
+      // TODO PUBLISH: Change this to your own EAS project ID
+      projectId: "9ae04bbe-5ef6-4ea9-b148-ac984152b1b4",
     },
   },
   plugins: ["./expo-plugins/with-modify-gradle.js"],
