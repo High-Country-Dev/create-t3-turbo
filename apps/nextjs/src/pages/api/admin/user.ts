@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/await-thenable */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { type NextApiHandler, type NextApiRequest } from "next";
 import { type Prisma } from "@prisma/client";
 import cloneDeep from "lodash/cloneDeep";

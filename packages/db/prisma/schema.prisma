@@ -2,30 +2,30 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
-    previewFeatures = ["jsonProtocol"]
+  provider        = "prisma-client-js"
+  previewFeatures = ["jsonProtocol"]
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 generator zod {
-    provider      = "zod-prisma"
-    output        = "../../api/src/types/zod"
-    relationModel = false
-    modelCase     = "PascalCase"
-    modelSuffix   = "Model"
-    imports       = "../../api/src/types/helpers"
+  provider      = "zod-prisma"
+  output        = "../../api/src/types/zod"
+  relationModel = false
+  modelCase     = "PascalCase"
+  modelSuffix   = "Model"
+  imports       = "../../api/src/types/helpers"
 }
 
 model Post {
-    id      String @id @default(cuid())
-    title   String
-    content String
-    createdAt     DateTime?  @default(now())
-    updatedAt     DateTime?  @updatedAt
+  id        String    @id @default(cuid())
+  title     String
+  content   String
+  createdAt DateTime? @default(now()) @db.Timestamp(6) /// @zod.custom(imports.dateOrIso).nullish()
+  updatedAt DateTime? @updatedAt @db.Timestamp(6) /// @zod.custom(imports.dateOrIso).nullish()
 }
 
 // NextAuth.js Models
@@ -33,53 +33,53 @@ model Post {
 // uncomment the @db.Text annotations below
 // @see https://next-auth.js.org/schemas/models
 model Account {
-    id                String  @id @default(cuid())
-    userId            String
-    type              String
-    provider          String
-    providerAccountId String
-    refresh_token     String? @db.Text
-    access_token      String? @db.Text
-    expires_at        Int?
-    token_type        String?
-    scope             String?
-    id_token          String? @db.Text
-    session_state     String?
-    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-    createdAt     DateTime?  @default(now())
-    updatedAt     DateTime?  @updatedAt
+  id                String    @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?   @db.Text
+  access_token      String?   @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?   @db.Text
+  session_state     String?
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt         DateTime? @default(now()) @db.Timestamp(6) /// @zod.custom(imports.dateOrIso).nullish()
+  updatedAt         DateTime? @updatedAt @db.Timestamp(6) /// @zod.custom(imports.dateOrIso).nullish()
 
-    @@unique([provider, providerAccountId])
+  @@unique([provider, providerAccountId])
 }
 
 model Session {
-    id           String   @id @default(cuid())
-    sessionToken String   @unique
-    userId       String
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-    createdAt     DateTime?  @default(now())
-    updatedAt     DateTime?  @updatedAt
+  id           String    @id @default(cuid())
+  sessionToken String    @unique
+  userId       String
+  expires      DateTime
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime? @default(now()) @db.Timestamp(6) /// @zod.custom(imports.dateOrIso).nullish()
+  updatedAt    DateTime? @updatedAt @db.Timestamp(6) /// @zod.custom(imports.dateOrIso).nullish()
 }
 
 model User {
-    id            String    @id @default(cuid())
-    name          String?
-    email         String?   @unique
-    emailVerified DateTime?
-    image         String?
-    accounts      Account[]
-    sessions      Session[]
-    createdAt     DateTime?  @default(now())
-    updatedAt     DateTime?  @updatedAt
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  createdAt     DateTime? @default(now()) @db.Timestamp(6) /// @zod.custom(imports.dateOrIso).nullish()
+  updatedAt     DateTime? @updatedAt @db.Timestamp(6) /// @zod.custom(imports.dateOrIso).nullish()
 }
 
 model VerificationToken {
-    identifier String
-    token      String   @unique
-    expires    DateTime
-    createdAt     DateTime?  @default(now())
-    updatedAt     DateTime?  @updatedAt
+  identifier String
+  token      String    @unique
+  expires    DateTime
+  createdAt  DateTime? @default(now()) @db.Timestamp(6) /// @zod.custom(imports.dateOrIso).nullish()
+  updatedAt  DateTime? @updatedAt @db.Timestamp(6) /// @zod.custom(imports.dateOrIso).nullish()
 
-    @@unique([identifier, token])
+  @@unique([identifier, token])
 }

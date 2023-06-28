@@ -6,6 +6,6 @@ export const SessionModel = z.object({
   sessionToken: z.string(),
   userId: z.string(),
   expires: z.date(),
-  createdAt: z.date().nullish(),
-  updatedAt: z.date().nullish(),
+  createdAt: imports.dateOrIso.nullish().nullish(),
+  updatedAt: imports.dateOrIso.nullish().nullish(),
 })

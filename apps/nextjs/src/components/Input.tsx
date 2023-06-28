@@ -28,7 +28,7 @@ export const Input = <T extends FieldValues>({
     <Controller
       name={name}
       control={control}
-      render={({ field, fieldState, formState }) => {
+      render={({ field }) => {
         return (
           <div className={containerClassName}>
             <label

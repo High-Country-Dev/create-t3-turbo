@@ -30,7 +30,7 @@ export const Select = <T extends FieldValues>({
       <Controller
         name={name}
         control={control}
-        render={({ field, fieldState, formState }) => {
+        render={({ field }) => {
           return (
             <select
               id={name}

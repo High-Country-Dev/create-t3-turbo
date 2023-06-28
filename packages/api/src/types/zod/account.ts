@@ -14,6 +14,6 @@ export const AccountModel = z.object({
   scope: z.string().nullish(),
   id_token: z.string().nullish(),
   session_state: z.string().nullish(),
-  createdAt: z.date().nullish(),
-  updatedAt: z.date().nullish(),
+  createdAt: imports.dateOrIso.nullish().nullish(),
+  updatedAt: imports.dateOrIso.nullish().nullish(),
 })

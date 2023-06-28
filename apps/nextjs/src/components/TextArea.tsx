@@ -30,7 +30,7 @@ export const TextArea = <T extends FieldValues>({
     <Controller
       name={name}
       control={control}
-      render={({ field, fieldState, formState }) => {
+      render={({ field }) => {
         return (
           <div className={`mb-1 ${containerClassName}`}>
             <label

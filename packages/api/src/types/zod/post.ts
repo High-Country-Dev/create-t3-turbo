@@ -5,6 +5,6 @@ export const PostModel = z.object({
   id: z.string(),
   title: z.string(),
   content: z.string(),
-  createdAt: z.date().nullish(),
-  updatedAt: z.date().nullish(),
+  createdAt: imports.dateOrIso.nullish().nullish(),
+  updatedAt: imports.dateOrIso.nullish().nullish(),
 })
