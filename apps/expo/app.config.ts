@@ -6,7 +6,7 @@ const defineConfig = (): ExpoConfig => ({
   name: "t3template",
   slug: "t3template",
   scheme: "t3template",
-  version: "1.0.0",
+  version: "2.0.0",
   owner: "mountain_dev",
   orientation: "portrait",
   icon: "./assets/icon.png",
@@ -39,7 +39,7 @@ const defineConfig = (): ExpoConfig => ({
       projectId: "9ae04bbe-5ef6-4ea9-b148-ac984152b1b4",
     },
   },
-  plugins: ["./expo-plugins/with-modify-gradle.js"],
+  plugins: ["expo-router", "./expo-plugins/with-modify-gradle.js"],
 });
 
 export default defineConfig;
