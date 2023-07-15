@@ -46,6 +46,8 @@
     "NODE_ENV",
     "SKIP_ENV_VALIDATION",
     "VERCEL",
-    "VERCEL_URL"
+    "VERCEL_URL",
+    "GITHUB_CLIENT_ID",
+    "GITHUB_CLIENT_SECRET"
   ]
 }

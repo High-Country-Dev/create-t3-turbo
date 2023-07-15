@@ -38,8 +38,10 @@ const defineConfig = (): ExpoConfig => ({
       // TODO PUBLISH: Change this to your own EAS project ID
       projectId: "9ae04bbe-5ef6-4ea9-b148-ac984152b1b4",
     },
+    nextAuthUrl: process.env.NEXTAUTH_URL,
+    githubId: process.env.EXPO_GITHUB_ID,
   },
-  plugins: ["expo-router", "./expo-plugins/with-modify-gradle.js"],
+  plugins: ["expo-router", "./expo-plugins/with-modify-gradle.js", "expo-apple-authentication"],
 });
 
 export default defineConfig;

@@ -1,5 +1,10 @@
 lockfileVersion: '6.0'
 
+patchedDependencies:
+  next-auth@4.18.6:
+    hash: cgabncpuh24fjy6b23y6o475uy
+    path: patches/next-auth@4.18.6.patch
+
 importers:
 
   .:
@@ -34,6 +39,12 @@ importers:
 
   apps/expo:
     dependencies:
+      '@acme/api':
+        specifier: ^0.1.0
+        version: link:../../packages/api
+      '@acme/auth':
+        specifier: ^0.1.0
+        version: link:../../packages/auth
       '@acme/common':
         specifier: ^0.1.0
         version: link:../../packages/common
@@ -61,15 +72,30 @@ importers:
       expo:
         specifier: ^49.0.0
         version: 49.0.0(@babel/core@7.21.8)
+      expo-apple-authentication:
+        specifier: ^5.0.1
+        version: 5.0.1(expo@49.0.0)
+      expo-application:
+        specifier: ^5.0.1
+        version: 5.3.0(expo@49.0.0)
+      expo-auth-session:
+        specifier: ^3.8.0
+        version: 3.8.0(expo-random@13.0.0)(expo@49.0.0)
       expo-constants:
         specifier: ~14.4.2
         version: 14.4.2(expo@49.0.0)
       expo-linking:
         specifier: ~5.0.2
         version: 5.0.2(expo@49.0.0)
+      expo-random:
+        specifier: ^13.0.0
+        version: 13.0.0(expo@49.0.0)
       expo-router:
         specifier: ^2.0.0
         version: 2.0.0(expo-constants@14.4.2)(expo-linking@5.0.2)(expo-modules-autolinking@1.5.0)(expo-status-bar@1.6.0)(expo@49.0.0)(metro@0.76.7)(react-dom@18.2.0)(react-native-gesture-handler@2.12.0)(react-native-safe-area-context@4.6.3)(react-native-screens@3.22.1)(react-native@0.72.1)(react@18.2.0)
+      expo-secure-store:
+        specifier: ^12.0.0
+        version: 12.0.0(expo@49.0.0)
       expo-splash-screen:
         specifier: ~0.20.4
         version: 0.20.4(expo-modules-autolinking@1.5.0)(expo@49.0.0)
@@ -82,6 +108,9 @@ importers:
       nativewind:
         specifier: ^2.0.11
         version: 2.0.11(react@18.2.0)(tailwindcss@3.3.2)
+      next-auth:
+        specifier: 4.18.6
+        version: 4.18.6(patch_hash=cgabncpuh24fjy6b23y6o475uy)(next@13.4.9)(react-dom@18.2.0)(react@18.2.0)
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -100,13 +129,16 @@ importers:
       react-native-screens:
         specifier: ~3.22.1
         version: 3.22.1(react-native@0.72.1)(react@18.2.0)
+      react-native-url-polyfill:
+        specifier: ^1.3.0
+        version: 1.3.0(react-native@0.72.1)
       superjson:
         specifier: 1.9.1
         version: 1.9.1
+      uuid:
+        specifier: ^9.0.0
+        version: 9.0.0
     devDependencies:
-      '@acme/api':
-        specifier: ^0.1.0
-        version: link:../../packages/api
       '@acme/eslint-config':
         specifier: ^0.1.0
         version: link:../../packages/config/eslint
@@ -192,8 +224,8 @@ importers:
         specifier: ^13.4.9
         version: 13.4.9(@babel/core@7.21.8)(react-dom@18.2.0)(react@18.2.0)
       next-auth:
-        specifier: ^4.22.1
-        version: 4.22.1(next@13.4.9)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 4.18.6
+        version: 4.18.6(patch_hash=cgabncpuh24fjy6b23y6o475uy)(next@13.4.9)(react-dom@18.2.0)(react@18.2.0)
       ra-data-simple-prisma:
         specifier: ^2.3.2
         version: 2.3.2(@prisma/client@4.15.0)(@types/react@18.2.14)(react-dom@18.2.0)(react@18.2.0)
@@ -306,7 +338,7 @@ importers:
         version: link:../db
       '@next-auth/prisma-adapter':
         specifier: ^1.0.6
-        version: 1.0.6(@prisma/client@4.15.0)(next-auth@4.22.1)
+        version: 1.0.6(@prisma/client@4.15.0)(next-auth@4.18.6)
       '@t3-oss/env-nextjs':
         specifier: ^0.3.1
         version: 0.3.1(typescript@5.1.3)(zod@3.21.4)
@@ -314,8 +346,8 @@ importers:
         specifier: ^13.4.9
         version: 13.4.9(@babel/core@7.21.8)(react-dom@18.2.0)(react@18.2.0)
       next-auth:
-        specifier: ^4.22.1
-        version: 4.22.1(next@13.4.9)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 4.18.6
+        version: 4.18.6(patch_hash=cgabncpuh24fjy6b23y6o475uy)(next@13.4.9)(react-dom@18.2.0)(react@18.2.0)
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -2858,14 +2890,14 @@ packages:
       react-is: 18.2.0
     dev: false
 
-  /@next-auth/prisma-adapter@1.0.6(@prisma/client@4.15.0)(next-auth@4.22.1):
+  /@next-auth/prisma-adapter@1.0.6(@prisma/client@4.15.0)(next-auth@4.18.6):
     resolution: {integrity: sha512-Z7agwfSZEeEcqKqrnisBun7VndRPshd6vyDsoRU68MXbkui8storkHgvN2hnNDrqr/hSCF9aRn56a1qpihaB4A==}
     peerDependencies:
       '@prisma/client': '>=2.26.0 || >=3'
       next-auth: ^4
     dependencies:
       '@prisma/client': 4.15.0(prisma@4.15.0)
-      next-auth: 4.22.1(next@13.4.9)(react-dom@18.2.0)(react@18.2.0)
+      next-auth: 4.18.6(patch_hash=cgabncpuh24fjy6b23y6o475uy)(next@13.4.9)(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
   /@next/env@13.4.9:
@@ -5020,6 +5052,13 @@ packages:
     resolution: {integrity: sha512-W9pAhw0ja1Edb5GVdIF1mjZw/ASI0AlShXM83UUGe2DVr5TdAPEA1OA8m/g8zWp9x6On7gqufY+FatDbC3MDQg==}
     dev: false
 
+  /compare-urls@2.0.0:
+    resolution: {integrity: sha512-eCJcWn2OYFEIqbm70ta7LQowJOOZZqq1a2YbbFCFI1uwSvj+TWMwXVn7vPR1ceFNcAIt5RSTDbwdlX82gYLTkA==}
+    engines: {node: '>=6'}
+    dependencies:
+      normalize-url: 2.0.1
+    dev: false
+
   /compare-versions@3.6.0:
     resolution: {integrity: sha512-W6Af2Iw1z4CB7q4uU4hv646dW9GQuBM+YpC0UvUCWSD8w90SJjp+ujJuXaEMtAXBtSqGfMPuFOVn4/+FlaqfBA==}
     dev: false
@@ -6142,6 +6181,14 @@ packages:
       strip-final-newline: 3.0.0
     dev: false
 
+  /expo-apple-authentication@5.0.1(expo@49.0.0):
+    resolution: {integrity: sha512-xdHZb57gQb2eQYQdmZ2M5x4tQOiK1mkL5FW5oYDg9WefN3LMi1ypcjcVTeFstdkdpgwQDx18P2F52JtNA/jJdQ==}
+    peerDependencies:
+      expo: '*'
+    dependencies:
+      expo: 49.0.0(@babel/core@7.21.8)
+    dev: false
+
   /expo-application@5.3.0(expo@49.0.0):
     resolution: {integrity: sha512-XLkaELwmiXW6JjFVkwuiFQaGZoNKAxNAcSJkFdz8s4rCljEwehylbzoPk37QHw3cxqb4v0/2EICtg4C4kpEVCA==}
     peerDependencies:
@@ -6165,6 +6212,38 @@ packages:
       - supports-color
     dev: false
 
+  /expo-auth-session@3.8.0(expo-random@13.0.0)(expo@49.0.0):
+    resolution: {integrity: sha512-pQ8GryTTZL/JKHvifUGD4GGlZWo7RrcoQlvQ0O5m5edYfoa7fMHCg20MBX4Da4P3eVgJlqWZWCHfBC2fZxcRfA==}
+    peerDependencies:
+      expo-random: '*'
+    peerDependenciesMeta:
+      expo-random:
+        optional: true
+    dependencies:
+      expo-constants: 14.0.2(expo@49.0.0)
+      expo-crypto: 12.0.0(expo@49.0.0)
+      expo-linking: 3.3.1(expo@49.0.0)
+      expo-random: 13.0.0(expo@49.0.0)
+      expo-web-browser: 12.0.0(expo@49.0.0)
+      invariant: 2.2.4
+      qs: 6.9.1
+    transitivePeerDependencies:
+      - expo
+      - supports-color
+    dev: false
+
+  /expo-constants@14.0.2(expo@49.0.0):
+    resolution: {integrity: sha512-wzV3nrzTXTI8yG0tfas3fnqCfKV6YE+1GphEREyVDAShEB6mBInX1b6HgtpHFy2wOtnml+lPVmTCeGtjjLnZhA==}
+    peerDependencies:
+      expo: '*'
+    dependencies:
+      '@expo/config': 7.0.3
+      expo: 49.0.0(@babel/core@7.21.8)
+      uuid: 3.4.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /expo-constants@14.4.2(expo@49.0.0):
     resolution: {integrity: sha512-nOB122DOAjk+KrJT69lFQAoYVQGQjFHSigCPVBzVdko9S1xGsfiOH9+X5dygTsZTIlVLpQJDdmZ7ONiv3i+26w==}
     peerDependencies:
@@ -6175,6 +6254,14 @@ packages:
       uuid: 3.4.0
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /expo-crypto@12.0.0(expo@49.0.0):
+    resolution: {integrity: sha512-2KC52eLYsXndDZOVFyr+K3Zs9wDgpqZ7F7fwAiUg+yNbE21CJrHKDFvo/Br0FAaDf/w9pUks5/qi1azB5sDzvg==}
+    peerDependencies:
+      expo: '*'
+    dependencies:
+      expo: 49.0.0(@babel/core@7.21.8)
     dev: false
 
   /expo-file-system@15.4.2(expo@49.0.0):
@@ -6220,6 +6307,19 @@ packages:
       expo: 49.0.0(@babel/core@7.21.8)
     dev: false
 
+  /expo-linking@3.3.1(expo@49.0.0):
+    resolution: {integrity: sha512-T3VIZMyZhkBOpHIyfT514rweGZZMbdg1vwavsfAkm6BFJ8G0iNVGbYMTpoUiQ9xdA0ARCcZbXFFb+WhqEUITgQ==}
+    dependencies:
+      '@types/qs': 6.9.7
+      expo-constants: 14.0.2(expo@49.0.0)
+      invariant: 2.2.4
+      qs: 6.11.2
+      url-parse: 1.5.10
+    transitivePeerDependencies:
+      - expo
+      - supports-color
+    dev: false
+
   /expo-linking@5.0.2(expo@49.0.0):
     resolution: {integrity: sha512-SPQus0+tYGx9c69Uw4wmdo3rkKX8vRT1vyJz/mvkpSlZN986s0NmP/V0M5vDv5Zv2qZzVdqJyuITFe0Pg5aI+A==}
     dependencies:
@@ -6252,6 +6352,15 @@ packages:
     dependencies:
       compare-versions: 3.6.0
       invariant: 2.2.4
+    dev: false
+
+  /expo-random@13.0.0(expo@49.0.0):
+    resolution: {integrity: sha512-aGb0vtUmFFuW0TF1rdOgsz89zEVD/RXUPUnnZy5+i3jJeQ2PerJ4uo72/EuWqHpCBNto8/qT+aCzFinmQDeTAA==}
+    peerDependencies:
+      expo: '*'
+    dependencies:
+      base64-js: 1.5.1
+      expo: 49.0.0(@babel/core@7.21.8)
     dev: false
 
   /expo-router@2.0.0(expo-constants@14.4.2)(expo-linking@5.0.2)(expo-modules-autolinking@1.5.0)(expo-status-bar@1.6.0)(expo@49.0.0)(metro@0.76.7)(react-dom@18.2.0)(react-native-gesture-handler@2.12.0)(react-native-safe-area-context@4.6.3)(react-native-screens@3.22.1)(react-native@0.72.1)(react@18.2.0):
@@ -6305,6 +6414,14 @@ packages:
       - supports-color
     dev: false
 
+  /expo-secure-store@12.0.0(expo@49.0.0):
+    resolution: {integrity: sha512-Rz5lYr2NxrnFvIPwuWcseUSbdUjFxNZG0oVulqM9puuK7t5lDG3/SAy+J22ELBhaltuci2VVO6hCdFwRoRiG/Q==}
+    peerDependencies:
+      expo: '*'
+    dependencies:
+      expo: 49.0.0(@babel/core@7.21.8)
+    dev: false
+
   /expo-splash-screen@0.20.4(expo-modules-autolinking@1.5.0)(expo@49.0.0):
     resolution: {integrity: sha512-JMfVqkb3Fbt9mdrWfSkTxaIkjd2RMJmQ19/JN+4Gk2MVEP4L1yzTQLomneH5+z/N5x48Tk3ZN+bFhtUXIlfjzg==}
     peerDependencies:
@@ -6320,6 +6437,15 @@ packages:
 
   /expo-status-bar@1.6.0:
     resolution: {integrity: sha512-e//Oi2WPdomMlMDD3skE4+1ZarKCJ/suvcB4Jo/nO427niKug5oppcPNYO+csR6y3ZglGuypS+3pp/hJ+Xp6fQ==}
+    dev: false
+
+  /expo-web-browser@12.0.0(expo@49.0.0):
+    resolution: {integrity: sha512-7/RUuE0sv5kf+mTw5/SOnks0Am1ctoxvT1Xi53Nom2EuXTKBV+b2Kf5xAw3ItoW5W4MHJUX3FdNI6qc9sS9+Pw==}
+    peerDependencies:
+      expo: '*'
+    dependencies:
+      compare-urls: 2.0.0
+      expo: 49.0.0(@babel/core@7.21.8)
     dev: false
 
   /expo@49.0.0(@babel/core@7.21.8):
@@ -7339,6 +7465,11 @@ packages:
   /is-path-inside@3.0.3:
     resolution: {integrity: sha512-Fd4gABb+ycGAmKou8eMftCupSir5lRxqf4aD/vd0cD2qc4HL07OjCeuHMr8Ro4CoMaeCKDB0/ECBOVWjTwUvPQ==}
     engines: {node: '>=8'}
+
+  /is-plain-obj@1.1.0:
+    resolution: {integrity: sha512-yvkRyxmFKEOQ4pNXCmJG5AEQNlXJS5LaONXo5/cLdTZdWvsZ1ioJEonLGAosKlMWE8lwUy/bJzMjcw8az73+Fg==}
+    engines: {node: '>=0.10.0'}
+    dev: false
 
   /is-plain-object@2.0.4:
     resolution: {integrity: sha512-h5PpgXkWitc38BBMYawTYMWJHFZJVnBquFE57xFpjB8pJFiF6gZ+bU+WyI/yqXiFR5mdLsgYNaPe8uao6Uv9Og==}
@@ -8933,8 +9064,9 @@ packages:
     resolution: {integrity: sha512-SrQrok4CATudVzBS7coSz26QRSmlK9TzzoFbeKfcPBUFPjcQM9Rqvr/DlJkOrwI/0KcgvMub1n1g5Jt9EgRn4A==}
     dev: false
 
-  /next-auth@4.22.1(next@13.4.9)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-NTR3f6W7/AWXKw8GSsgSyQcDW6jkslZLH8AiZa5PQ09w1kR8uHtR9rez/E9gAq/o17+p0JYHE8QjF3RoniiObA==}
+  /next-auth@4.18.6(patch_hash=cgabncpuh24fjy6b23y6o475uy)(next@13.4.9)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-0TQwbq5X9Jyd1wUVYUoyvHJh4JWXeW9UOcMEl245Er/Y5vsSbyGJHt8M7xjRMzk9mORVMYehoMdERgyiq/jCgA==}
+    engines: {node: ^12.19.0 || ^14.15.0 || ^16.13.0 || ^18.12.0}
     peerDependencies:
       next: ^12.2.5 || ^13
       nodemailer: ^6.6.5
@@ -8957,6 +9089,7 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
       uuid: 8.3.2
     dev: false
+    patched: true
 
   /next@13.4.9(@babel/core@7.21.8)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-vtefFm/BWIi/eWOqf1GsmKG3cjKw1k3LjuefKRcL3iiLl3zWzFdPG3as6xtxrGO6gwTzzaO1ktL4oiHt/uvTjA==}
@@ -9102,6 +9235,15 @@ packages:
     resolution: {integrity: sha512-bdok/XvKII3nUpklnV6P2hxtMNrCboOjAcyBuQnWEhO665FwrSNRxU+AqpsyvO6LgGYPspN+lu5CLtw4jPRKNA==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /normalize-url@2.0.1:
+    resolution: {integrity: sha512-D6MUW4K/VzoJ4rJ01JFKxDrtY1v9wrgzCX5f2qj/lzH1m/lW6MhUZFKerVsnyjOhOsYzI9Kqqak+10l4LvLpMw==}
+    engines: {node: '>=4'}
+    dependencies:
+      prepend-http: 2.0.0
+      query-string: 5.1.1
+      sort-keys: 2.0.0
+    dev: false
 
   /normalize-url@4.5.1:
     resolution: {integrity: sha512-9UZCFRHQdNrfTpGg8+1INIg93B6zE0aXMVFkw1WFwvO4SlZywU6aLg5Of0Ap/PgcbSw4LNxvMWXMeugwMCX0AA==}
@@ -9937,6 +10079,20 @@ packages:
       side-channel: 1.0.4
     dev: false
 
+  /qs@6.9.1:
+    resolution: {integrity: sha512-Cxm7/SS/y/Z3MHWSxXb8lIFqgqBowP5JMlTUFyJN88y0SGQhVmZnqFK/PeuMX9LzUyWsqqhNxIyg0jlzq946yA==}
+    engines: {node: '>=0.6'}
+    dev: false
+
+  /query-string@5.1.1:
+    resolution: {integrity: sha512-gjWOsm2SoGlgLEdAGt7a6slVOk9mGiXmPFMqrEhLQ68rhQuBnpfs3+EmlvqKyxnCo9/PPlF+9MtY02S1aFg+Jw==}
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      decode-uri-component: 0.2.2
+      object-assign: 4.1.1
+      strict-uri-encode: 1.1.0
+    dev: false
+
   /query-string@7.1.3:
     resolution: {integrity: sha512-hh2WYhq4fi8+b+/2Kg9CEge4fDPvHS534aOOvOZeQ3+Vf2mCFsaFBYj0i+iXcAq6I9Vzp5fjMFBlONvayDC1qg==}
     engines: {node: '>=6'}
@@ -10257,6 +10413,15 @@ packages:
       react-freeze: 1.0.3(react@18.2.0)
       react-native: 0.72.1(@babel/core@7.21.8)(@babel/preset-env@7.21.5)(react@18.2.0)
       warn-once: 0.1.1
+    dev: false
+
+  /react-native-url-polyfill@1.3.0(react-native@0.72.1):
+    resolution: {integrity: sha512-w9JfSkvpqqlix9UjDvJjm1EjSt652zVQ6iwCIj1cVVkwXf4jQhQgTNXY6EVTwuAmUjg6BC6k9RHCBynoLFo3IQ==}
+    peerDependencies:
+      react-native: '*'
+    dependencies:
+      react-native: 0.72.1(@babel/core@7.21.8)(@babel/preset-env@7.21.5)(react@18.2.0)
+      whatwg-url-without-unicode: 8.0.0-3
     dev: false
 
   /react-native@0.72.1(@babel/core@7.21.8)(@babel/preset-env@7.21.5)(react@18.2.0):
@@ -10924,6 +11089,13 @@ packages:
     engines: {node: '>=8.0.0'}
     dev: false
 
+  /sort-keys@2.0.0:
+    resolution: {integrity: sha512-/dPCrG1s3ePpWm6yBbxZq5Be1dXGLyLn9Z791chDC3NFrpkVbWGzkBwPN1knaciexFXgRJ7hzdnwZ4stHSDmjg==}
+    engines: {node: '>=4'}
+    dependencies:
+      is-plain-obj: 1.1.0
+    dev: false
+
   /source-map-js@1.0.2:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}
     engines: {node: '>=0.10.0'}
@@ -11014,6 +11186,11 @@ packages:
   /streamsearch@1.1.0:
     resolution: {integrity: sha512-Mcc5wHehp9aXz1ax6bZUyY5afg9u2rv5cqQI3mRrYkGC8rW2hM02jWuwjtL++LS5qinSyhj2QfLyNsuc+VsExg==}
     engines: {node: '>=10.0.0'}
+    dev: false
+
+  /strict-uri-encode@1.1.0:
+    resolution: {integrity: sha512-R3f198pcvnB+5IpnBlRkphuE9n46WyVl8I39W/ZUTZLz4nqSP/oLYUrcnJrw462Ds8he4YKMov2efsTIw1BDGQ==}
+    engines: {node: '>=0.10.0'}
     dev: false
 
   /strict-uri-encode@2.0.0:
@@ -11860,8 +12037,22 @@ packages:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
     dev: false
 
+  /webidl-conversions@5.0.0:
+    resolution: {integrity: sha512-VlZwKPCkYKxQgeSbH5EyngOmRp7Ww7I9rQLERETtf5ofd9pGeswWiOtogpEO850jziPRarreGxn5QIiTqpb2wA==}
+    engines: {node: '>=8'}
+    dev: false
+
   /whatwg-fetch@3.6.2:
     resolution: {integrity: sha512-bJlen0FcuU/0EMLrdbJ7zOnW6ITZLrZMIarMUVmdKtsGvZna8vxKYaexICWPfZ8qwf9fzNq+UEIZrnSaApt6RA==}
+    dev: false
+
+  /whatwg-url-without-unicode@8.0.0-3:
+    resolution: {integrity: sha512-HoKuzZrUlgpz35YO27XgD28uh/WJH4B0+3ttFqRo//lmq+9T/mIOJ6kqmINI9HpUpz1imRC/nR/lxKpJiv0uig==}
+    engines: {node: '>=10'}
+    dependencies:
+      buffer: 5.7.1
+      punycode: 2.3.0
+      webidl-conversions: 5.0.0
     dev: false
 
   /whatwg-url@5.0.0:

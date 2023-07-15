@@ -1,8 +1,8 @@
-import React from "react";
-import Constants from "expo-constants";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/client";
 import { createTRPCReact } from "@trpc/react-query";
+import Constants from "expo-constants";
+import React from "react";
 import superjson from "superjson";
 
 import { type AppRouter } from "@acme/api";
@@ -17,7 +17,7 @@ export { type RouterInputs, type RouterOutputs } from "@acme/api";
  * Extend this function when going to production by
  * setting the baseUrl to your production API URL.
  */
-const getBaseUrl = () => {
+export const getBaseUrl = () => {
   /**
    * Gets the IP address of your host-machine. If it cannot automatically find it,
    * you'll have to manually set it. NOTE: Port 3000 should work for most but confirm
