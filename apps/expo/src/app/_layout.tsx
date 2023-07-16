@@ -2,8 +2,7 @@ import React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-
-import { SessionProvider } from "@acme/auth/src/expo/session";
+import { SessionProvider } from "next-auth/expo";
 
 import { getBaseUrl, TRPCProvider } from "~/utils/api";
 import { AuthScreen } from "~/screens/auth";
@@ -14,7 +13,7 @@ const RootLayout = () => {
   const baseUrl = getBaseUrl();
   console.log("using:", { baseUrl });
   return (
-    <SessionProvider baseUrl={"http://localhost:3000"}>
+    <SessionProvider>
       <TRPCProvider>
         <SafeAreaProvider>
           {/*

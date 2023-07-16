@@ -18,6 +18,7 @@ export const env = createEnv({
       // VERCEL_URL doesn't include `https` so it cant be validated as a URL
       process.env.VERCEL ? z.string() : z.string().url(),
     ),
+    NEXTAUTH_EXPO_URL: z.string().url(),
   },
   client: {},
   runtimeEnv: {
@@ -25,8 +26,9 @@ export const env = createEnv({
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
     DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
-    GITHUB_CLIENT_ID:process.env.GITHUB_CLIENT_ID,
-    GITHUB_CLIENT_SECRET:process.env.GITHUB_CLIENT_SECRET,
+    GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
+    GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
+    NEXTAUTH_EXPO_URL: process.env.NEXTAUTH_EXPO_URL,
   },
   skipValidation: !!process.env.CI || !!process.env.SKIP_ENV_VALIDATION,
 });
