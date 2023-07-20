@@ -2,10 +2,11 @@ import React from "react";
 import { Button, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Stack, useRouter } from "expo-router";
+import { SignedIn, SignedOut, useAuth, useUser } from "@clerk/clerk-expo";
 import { FlashList } from "@shopify/flash-list";
 
-import { api } from "~/utils/api";
 import type { RouterOutputs } from "~/utils/api";
+import { api } from "~/utils/api";
 
 function PostCard(props: {
   post: RouterOutputs["post"]["all"][number];
@@ -87,6 +88,7 @@ function CreatePost() {
 
 const Index = () => {
   const utils = api.useContext();
+  const router = useRouter();
 
   const postQuery = api.post.all.useQuery();
 
@@ -94,12 +96,38 @@ const Index = () => {
     onSettled: () => utils.post.all.invalidate(),
   });
 
+  const { userId, sessionId, signOut } = useAuth();
+  const { isSignedIn, user } = useUser();
+
   return (
     <SafeAreaView className="bg-[#1F104A]">
       {/* Changes page title visible on the header */}
       <Stack.Screen options={{ title: "Home Page" }} />
       <View className="h-full w-full p-4">
-        <Text className="mx-auto pb-2 text-5xl font-bold text-white">
+        <SignedIn>
+          <Text className="text-white">You are Signed in</Text>
+          <TouchableOpacity onPress={() => signOut()}>
+            <Text className="text-white">Sign out</Text>
+          </TouchableOpacity>
+        </SignedIn>
+        <SignedOut>
+          <TouchableOpacity onPress={() => router.push("/auth/signUp")}>
+            <Text className="text-white">Sign up</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => router.push("/auth/signIn")}>
+            <Text className="text-white">Sign in</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => router.push("/auth/signInWithOAuth")}
+          >
+            <Text className="text-white">Sign in with OAuth</Text>
+          </TouchableOpacity>
+        </SignedOut>
+        <Text className="text-white">
+          Hello, {userId} your current active session is {sessionId} and
+          isSignedIn: {isSignedIn} and name: {user?.fullName}
+        </Text>
+        <Text className="mx-auto mt-4 pb-2 text-5xl font-bold text-white">
           Create <Text className="text-pink-400">T3</Text> Turbo
         </Text>
 
