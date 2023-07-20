@@ -2,6 +2,10 @@
   "$schema": "https://turborepo.org/schema.json",
   "globalDependencies": ["**/.env", "tsconfig.json"],
   "pipeline": {
+    "db:deploy": {
+      "inputs": ["prisma/schema.prisma"],
+      "cache": false
+    },
     "db:generate": {
       "inputs": ["prisma/schema.prisma"],
       "cache": false
@@ -15,7 +19,7 @@
       "cache": false
     },
     "build": {
-      "dependsOn": ["^build", "^db:generate"],
+      "dependsOn": ["^build", "^db:deploy", "^db:generate"],
       "outputs": [".next/**", ".expo/**"]
     },
     "lint": {},
