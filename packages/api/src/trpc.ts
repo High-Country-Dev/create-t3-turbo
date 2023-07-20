@@ -8,10 +8,11 @@
  */
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
+import type { OpenApiMeta } from "trpc-openapi";
 import { ZodError } from "zod";
 
-import { auth } from "@acme/auth";
 import type { Session } from "@acme/auth";
+import { auth } from "@acme/auth";
 import { prisma } from "@acme/db";
 
 /**
@@ -63,19 +64,22 @@ export const createTRPCContext = async () => {
  * This is where the trpc api is initialized, connecting the context and
  * transformer
  */
-const t = initTRPC.context<typeof createTRPCContext>().create({
-  transformer: superjson,
-  errorFormatter({ shape, error }) {
-    return {
-      ...shape,
-      data: {
-        ...shape.data,
-        zodError:
-          error.cause instanceof ZodError ? error.cause.flatten() : null,
-      },
-    };
-  },
-});
+const t = initTRPC
+  .meta<OpenApiMeta>()
+  .context<typeof createTRPCContext>()
+  .create({
+    transformer: superjson,
+    errorFormatter({ shape, error }) {
+      return {
+        ...shape,
+        data: {
+          ...shape.data,
+          zodError:
+            error.cause instanceof ZodError ? error.cause.flatten() : null,
+        },
+      };
+    },
+  });
 
 /**
  * 3. ROUTER & PROCEDURE (THE IMPORTANT BIT)
