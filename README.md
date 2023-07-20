@@ -148,10 +148,13 @@ Let's deploy the Next.js application to [Vercel](https://vercel.com/). If you ha
 
 ### Expo
 
+Update on 06-22-23: https://github.com/t3-oss/create-t3-turbo/issues/402 pnpm lockfile causes eas build issues
+
 Deploying your Expo application works slightly differently compared to Next.js on the web. Instead of "deploying" your app online, you need to submit production builds of your app to the app stores, like [Apple App Store](https://www.apple.com/app-store/) and [Google Play](https://play.google.com/store/apps). You can read the full [Distributing your app](https://docs.expo.dev/distribution/introduction/), including best practices, in the Expo docs.
 
 1. Make sure to modify the `getMobileBaseUrl` function to point to your backend's production URL:
 
+apps/expo/src/utils/api.tsx
 https://github.com/t3-oss/create-t3-turbo/blob/656965aff7db271e5e080242c4a3ce4dad5d25f8/apps/expo/src/utils/api.tsx#L20-L37
 
 2. Let's start by setting up [EAS Build](https://docs.expo.dev/build/introduction/), which is short for Expo Application Services. The build service helps you create builds of your app, without requiring a full native development setup. The commands below are a summary of [Creating your first build](https://docs.expo.dev/build/setup/).
