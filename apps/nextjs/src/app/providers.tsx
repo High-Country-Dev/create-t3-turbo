@@ -8,12 +8,11 @@ import { httpBatchLink, loggerLink } from "@trpc/client";
 import superjson from "superjson";
 
 import { api } from "~/utils/api";
+import { env } from "~/env.mjs";
 
 const getBaseUrl = () => {
   if (typeof window !== "undefined") return ""; // browser should use relative url
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`; // SSR should use vercel url
-
-  return `http://localhost:3000`; // dev SSR should use localhost
+  return env.NEXT_PUBLIC_URL;
 };
 
 export function TRPCReactProvider(props: { children: React.ReactNode }) {
