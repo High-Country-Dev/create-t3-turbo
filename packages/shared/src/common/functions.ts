@@ -84,3 +84,6 @@ export function sleep(milliseconds: number) {
     currentDate = Date.now();
   } while (currentDate - date < milliseconds);
 }
+
+// https://stackoverflow.com/questions/8206269/how-to-remove-http-from-a-url-in-javascript
+export const removeProtocol = (url: string) => url.replace(/(^\w+:|^)\/\//, "");
