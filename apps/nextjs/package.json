@@ -15,8 +15,9 @@
   "dependencies": {
     "@acme/api": "^0.1.0",
     "@acme/auth": "^0.1.0",
-    "@acme/shared": "^0.1.0",
     "@acme/db": "^0.1.0",
+    "@acme/shared": "^0.1.0",
+    "@clerk/clerk-js": "^4.54.1",
     "@clerk/nextjs": "^4.21.15",
     "@t3-oss/env-nextjs": "^0.6.0",
     "@tanstack/react-query": "^4.29.23",
