@@ -57,3 +57,5 @@ export const {
     // }
   },
 });
+
+export { env };
