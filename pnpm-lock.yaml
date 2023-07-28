@@ -182,6 +182,9 @@ importers:
       next:
         specifier: ^13.4.10
         version: 13.4.10(@babel/core@7.22.9)(react-dom@18.2.0)(react@18.2.0)
+      next-plausible:
+        specifier: ^3.10.1
+        version: 3.10.1(next@13.4.10)(react-dom@18.2.0)(react@18.2.0)
       ra-data-simple-prisma:
         specifier: ^2.3.2
         version: 2.3.2(@prisma/client@5.0.0)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
@@ -11520,6 +11523,18 @@ packages:
     dependencies:
       "@auth/core": 0.0.0-manual.8fcd46b0
       "@auth/nextjs": 0.0.0-manual.179c08d4(next@13.4.10)(react@18.2.0)
+      next: 13.4.10(@babel/core@7.22.9)(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /next-plausible@3.10.1(next@13.4.10)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-3GyBQH+sUfovemgwvodx84djMlF/o+FoSPtCS2QVFNiJtwGFuhs6CQckMIv+VWdz9zERwZB2nJLJLmgV6aT/aA==}
+    peerDependencies:
+      next: ^11.1.0 || ^12.0.0 || ^13.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
       next: 13.4.10(@babel/core@7.22.9)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
