@@ -7,6 +7,8 @@ import superjson from "superjson";
 
 import type { AppRouter } from "@acme/api";
 
+import type { EasExtra } from "./types";
+
 /**
  * A set of typesafe hooks for consuming your API.
  */
@@ -32,10 +34,7 @@ const getMobileBaseUrl = () => {
   const localhost = debuggerHost?.split(":")[0];
 
   if (!localhost) {
-    // return "https://your-production-url.com";
-    throw new Error(
-      "Failed to get localhost. Please point to your production server.",
-    );
+    return (Constants.expoConfig?.extra as EasExtra).apiUrl;
   }
   return `http://${localhost}:3000`;
 };
