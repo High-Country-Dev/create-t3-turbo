@@ -3,4 +3,5 @@ export interface EasExtra {
     projectId: string;
   };
   apiUrl: string;
+  clerkPublishableKey:string
 }

@@ -1,3 +1,4 @@
+import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
@@ -30,7 +31,9 @@ export default function Layout(props: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={["font-sans", fontSans.variable].join(" ")}>
-        <TRPCReactProvider>{props.children}</TRPCReactProvider>
+        <ClerkProvider>
+          <TRPCReactProvider>{props.children}</TRPCReactProvider>
+        </ClerkProvider>
       </body>
     </html>
   );

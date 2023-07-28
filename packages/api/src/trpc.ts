@@ -6,16 +6,18 @@
  * tl;dr - this is where all the tRPC server stuff is created and plugged in.
  * The pieces you will need to use are documented accordingly near the end
  */
-// import type { NextApiRequest } from "next";
-// import { auth } from "@clerk/nextjs";
-// import { getAuth } from "@clerk/nextjs/server";
+import type { NextApiRequest } from "next";
+import { auth } from "@clerk/nextjs";
+import type {
+  SignedInAuthObject,
+  SignedOutAuthObject,
+} from "@clerk/nextjs/api";
+import { getAuth } from "@clerk/nextjs/server";
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import type { OpenApiMeta } from "trpc-openapi";
 import { ZodError } from "zod";
 
-import type { Session } from "@acme/auth";
-import { auth } from "@acme/auth";
 import { prisma } from "@acme/db";
 
 /**
@@ -28,7 +30,7 @@ import { prisma } from "@acme/db";
  *
  */
 interface CreateContextOptions {
-  session: Session | null;
+  session: SignedInAuthObject | SignedOutAuthObject;
 }
 
 /**
@@ -47,9 +49,9 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
   };
 };
 
-interface TRPCContextParams {}
-// | { openApi: true; req: NextApiRequest }
-// | { openApi?: false };
+type TRPCContextParams =
+  | { openApi: true; req: NextApiRequest }
+  | { openApi?: false };
 
 /**
  * This is the actual context you'll use in your router. It will be used to
@@ -58,7 +60,7 @@ interface TRPCContextParams {}
  */
 export const createTRPCContext = (params?: TRPCContextParams) => {
   // Get the session from the server using the unstable_getServerSession wrapper function
-  const session = auth();
+  const session = params?.openApi ? getAuth(params.req) : auth();
   return createInnerTRPCContext({
     session,
   });

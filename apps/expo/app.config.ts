@@ -10,6 +10,8 @@ const extra: EasExtra = {
     projectId: "9ae04bbe-5ef6-4ea9-b148-ac984152b1b4",
   },
   apiUrl: "http://create-t3-turbo-jade.vercel.app",
+  clerkPublishableKey:
+    "pk_test_b3JnYW5pYy1raXR0ZW4tNzkuY2xlcmsuYWNjb3VudHMuZGV2JA",
 };
 
 const defineConfig = (): ExpoConfig => ({
