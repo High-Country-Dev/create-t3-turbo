@@ -12,18 +12,20 @@
   },
   "dependencies": {
     "@acme/auth": "^0.1.0",
-    "@acme/shared": "^0.1.0",
     "@acme/db": "^0.1.0",
+    "@acme/shared": "^0.1.0",
     "@trpc/client": "^10.34.0",
     "@trpc/server": "^10.34.0",
     "lodash": "^4.17.21",
-    "trpc-openapi": "^1.2.0",
     "superjson": "1.13.1",
+    "svix": "^1.7.0",
+    "trpc-openapi": "^1.2.0",
     "zod": "^3.21.4"
   },
   "devDependencies": {
     "@acme/eslint-config": "^0.2.0",
     "@types/lodash": "^4.14.195",
+    "encoding": "^0.1.13",
     "eslint": "^8.45.0",
     "typescript": "^5.1.6"
   },

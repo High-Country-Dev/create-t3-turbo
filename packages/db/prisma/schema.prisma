@@ -26,3 +26,50 @@ model Post {
     createdAt DateTime? @default(now()) @db.Timestamp(6) /// @zod.custom(imports.dateOrIso).nullish()
     updatedAt DateTime? @updatedAt @db.Timestamp(6) /// @zod.custom(imports.dateOrIso).nullish()
 }
+
+model User {
+    id                    String         @id
+    createdAt             BigInt
+    updatedAt             BigInt?
+    passwordEnabled       Boolean?
+    totpEnabled           Boolean?
+    backupCodeEnabled     Boolean?
+    twoFactorEnabled      Boolean?
+    profileImageUrl       String?
+    imageUrl              String?
+    primaryEmailAddressId String?
+    primaryPhoneNumberId  String?
+    primaryWeb3WalletId   String?
+    lastSignInAt          BigInt?
+    externalId            String?
+    username              String?
+    firstName             String?
+    lastName              String?
+    publicMetadata        Json?          @default("{}")
+    privateMetadata       Json?          @default("{}")
+    unsafeMetadata        Json?          @default("{}")
+    prismaCreatedAt       DateTime?      @default(now()) @db.Timestamp(6) /// @zod.custom(imports.dateOrIso).nullish()
+    prismaUpdatedAt       DateTime?      @updatedAt @db.Timestamp(6) /// @zod.custom(imports.dateOrIso).nullish()
+    emailAddresses        EmailAddress[]
+    phoneNumbers          PhoneNumber[]
+    // web3Wallets Web3Wallet[]
+    // externalAccounts ExternalAccount[]
+}
+
+model EmailAddress {
+    id        String    @id
+    email     String
+    userId    String
+    user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+    createdAt DateTime? @default(now()) @db.Timestamp(6) /// @zod.custom(imports.dateOrIso).nullish()
+    updatedAt DateTime? @updatedAt @db.Timestamp(6) /// @zod.custom(imports.dateOrIso).nullish()
+}
+
+model PhoneNumber {
+    id          String    @id
+    phoneNumber String
+    userId      String
+    user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+    createdAt   DateTime? @default(now()) @db.Timestamp(6) /// @zod.custom(imports.dateOrIso).nullish()
+    updatedAt   DateTime? @updatedAt @db.Timestamp(6) /// @zod.custom(imports.dateOrIso).nullish()
+}
