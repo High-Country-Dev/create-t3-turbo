@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
-import { api } from "~/utils/api";
 import type { RouterOutputs } from "~/utils/api";
+import { api } from "~/utils/api";
 
 export function CreatePostForm() {
   const context = api.useContext();
@@ -63,6 +64,7 @@ export function CreatePostForm() {
 }
 
 export function PostList() {
+  const [listRef] = useAutoAnimate();
   const [posts] = api.post.all.useSuspenseQuery();
 
   return (
@@ -71,7 +73,7 @@ export function PostList() {
         <span>There are no posts!</span>
       ) : (
         <div className="flex h-[40vh] justify-center overflow-y-scroll px-4 text-2xl">
-          <div className="flex w-full flex-col gap-4">
+          <div className="flex w-full flex-col gap-4" ref={listRef}>
             {posts.map((p) => {
               return <PostCard key={p.id} post={p} />;
             })}
