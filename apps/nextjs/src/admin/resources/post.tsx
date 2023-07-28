@@ -1,15 +1,11 @@
-import PersonIcon from "@mui/icons-material/Person";
+import ArticleIcon from "@mui/icons-material/Article";
 import type { ListProps, ResourceProps, ShowProps } from "react-admin";
 import {
-  BooleanField,
-  BooleanInput,
   Create,
   DatagridConfigurable,
   DateField,
   DateTimeInput,
   Edit,
-  email,
-  EmailField,
   List,
   Show,
   SimpleForm,
@@ -26,10 +22,8 @@ export const PostShow = (props: Omit<ShowProps, "children">) => {
     <Show {...props}>
       <SimpleShowLayout>
         <TextField source="id" />
-        <TextField source="name" />
-        <EmailField source="email" />
-        <BooleanField source="emailVerified" />
-        <TextField source="image" />
+        <TextField source="title" />
+        <TextField source="content" />
         <DateField source="createdAt" />
         <TextField source="updatedAt" />
       </SimpleShowLayout>
@@ -46,11 +40,11 @@ export const PostList = (props: Omit<ListProps, "children">) => {
         omit={["id", "updatedAt", "createdAt"]}
         rowClick="show"
       >
-        <TextField source="id" label="Id" />
-        <TextField source="name" label="Name" />
-        <TextField source="email" label="Email" />
-        <DateField source="updatedAt" showTime />
+        <TextField source="id" />
+        <TextField source="title" />
+        <TextField source="content" />
         <DateField source="createdAt" showTime />
+        <TextField source="updatedAt" showTime />
       </DatagridConfigurable>
     </List>
   );
@@ -60,8 +54,8 @@ const PostCreate = () => {
   return (
     <Create redirect="show">
       <SimpleForm>
-        <TextInput source="email" required validate={email()} />
-        <TextInput source="name" />
+        <TextInput source="title" />
+        <TextInput source="content" />
       </SimpleForm>
     </Create>
   );
@@ -72,10 +66,8 @@ const PostEdit = () => {
     <Edit>
       <SimpleForm>
         <TextInput source="id" />
-        <TextInput source="name" />
-        <TextInput source="email" />
-        <BooleanInput source="emailVerified" />
-        <TextInput source="image" />
+        <TextInput source="title" />
+        <TextInput source="content" />
         <DateTimeInput source="createdAt" />
         <DateTimeInput source="updatedAt" />
       </SimpleForm>
@@ -89,8 +81,7 @@ const resourceProps: ResourceProps = {
   show: Wrap(PostShow),
   create: Wrap(PostCreate),
   edit: Wrap(PostEdit),
-  recordRepresentation: "email",
-  icon: PersonIcon,
+  icon: ArticleIcon,
 };
 
 export default resourceProps;

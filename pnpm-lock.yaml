@@ -307,9 +307,6 @@ importers:
       next:
         specifier: ^13.4.10
         version: 13.4.10(@babel/core@7.22.9)(react-dom@18.2.0)(react@18.2.0)
-      next-auth:
-        specifier: ^0.0.0-manual.83c4ebd1
-        version: 0.0.0-manual.b53ca00b(next@13.4.10)(react-dom@18.2.0)(react@18.2.0)
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -3085,6 +3082,36 @@ packages:
       - react-dom
     dev: false
 
+  /@clerk/clerk-js@4.54.1(@babel/core@7.22.9)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0):
+    resolution:
+      {
+        integrity: sha512-yjGazdWaTFhlp39Csj3YuGZ/47cmrnKb1CCUq2LpJNZekIJ9Cd12FfaB3pKxR3oAVRIG2HsSq1oWMCDqFiPC1A==,
+      }
+    peerDependencies:
+      react: ">=18"
+    dependencies:
+      "@clerk/localizations": 1.23.2(react@18.2.0)
+      "@clerk/shared": 0.20.0(react@18.2.0)
+      "@clerk/types": 3.48.1
+      "@emotion/cache": 11.10.5
+      "@emotion/react": 11.10.5(@babel/core@7.22.9)(@types/react@18.2.15)(react@18.2.0)
+      "@floating-ui/react": 0.19.0(react-dom@18.2.0)(react@18.2.0)
+      "@zxcvbn-ts/core": 2.2.1
+      "@zxcvbn-ts/language-common": 3.0.2
+      browser-tabs-lock: 1.2.15
+      copy-to-clipboard: 3.3.3
+      core-js: 3.26.1
+      dequal: 2.0.3
+      qrcode.react: 3.1.0(react@18.2.0)
+      qs: 6.11.0
+      react: 18.2.0
+      regenerator-runtime: 0.13.11
+    transitivePeerDependencies:
+      - "@babel/core"
+      - "@types/react"
+      - react-dom
+    dev: false
+
   /@clerk/clerk-react@4.23.0(react@18.2.0):
     resolution:
       {
@@ -3131,6 +3158,19 @@ packages:
       react: 18.2.0
     dev: false
 
+  /@clerk/localizations@1.23.2(react@18.2.0):
+    resolution:
+      {
+        integrity: sha512-9YlQ7tmaTaCLfreUn1e7IWEjRhUdK686Ms7h7oTrGJG8w4eazBvNLFyGd5jPD0R9C8o18JDpdabp+WBaFTr92g==,
+      }
+    engines: { node: ">=14" }
+    peerDependencies:
+      react: ">=16"
+    dependencies:
+      "@clerk/types": 3.48.1
+      react: 18.2.0
+    dev: false
+
   /@clerk/nextjs@4.21.15(next@13.4.10)(react-dom@18.2.0)(react@18.2.0):
     resolution:
       {
@@ -3171,6 +3211,16 @@ packages:
     resolution:
       {
         integrity: sha512-whs7s8E5PNBOCy14a80w723dAOStD0cnqY5u7AEq7gGuHuiIYyo1BfqIoIYRh3Oi3Z2cWnFmFNVDN+lHiJ1dFA==,
+      }
+    engines: { node: ">=14" }
+    dependencies:
+      csstype: 3.1.1
+    dev: false
+
+  /@clerk/types@3.48.1:
+    resolution:
+      {
+        integrity: sha512-bpSSfqdrw4iYCLlJ8UVN8HWMkA12wOH0lICdjnefPKKm1qO3yb8P5p6jmaCckcwF77unMECAslO2q2ocZcO1QA==,
       }
     engines: { node: ">=14" }
     dependencies:

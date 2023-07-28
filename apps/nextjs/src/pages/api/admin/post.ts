@@ -32,12 +32,12 @@ const getInclude = (_context: RaContext) => undefined;
 const getWhere = (context: RaContext) => {
   const { q: _q, id = "" } = context?.filter ?? {};
 
-  const whereFilter: Prisma.UserWhereInput = {
+  const whereFilter: Prisma.PostWhereInput = {
     ...(id.length === 36 && { id }),
   };
 
   return {
-    where: merge(whereFilter) as Prisma.UserWhereInput,
+    where: merge(whereFilter) as Prisma.PostWhereInput,
   };
 };
 
@@ -47,20 +47,20 @@ const getWhere = (context: RaContext) => {
 
 const findMany =
   (context: RaContext) =>
-  (args: Pick<Prisma.UserFindManyArgs, "where" | "orderBy">) =>
-    prisma.user.findMany(merge(args, getInclude(context), getWhere(context)));
+  (args: Pick<Prisma.PostFindManyArgs, "where" | "orderBy">) =>
+    prisma.post.findMany(merge(args, getInclude(context), getWhere(context)));
 
 const findUnique =
-  (context: RaContext) => (args: Pick<Prisma.UserFindUniqueArgs, "where">) =>
-    prisma.user.findUnique(merge(args, getInclude(context))).then((rawUser) => {
-      if (!rawUser) return null;
-      return rawUser;
+  (context: RaContext) => (args: Pick<Prisma.PostFindUniqueArgs, "where">) =>
+    prisma.post.findUnique(merge(args, getInclude(context))).then((rawPost) => {
+      if (!rawPost) return null;
+      return rawPost;
     });
 
-const count = (context: RaContext) => (args: Prisma.UserCountArgs) =>
-  prisma.user.count(merge(args, getWhere(context)));
+const count = (context: RaContext) => (args: Prisma.PostCountArgs) =>
+  prisma.post.count(merge(args, getWhere(context)));
 
-export type RaUser = NonNullable<
+export type RaPost = NonNullable<
   Awaited<ReturnType<ReturnType<typeof findUnique>>>
 >;
 
@@ -76,24 +76,24 @@ const apiHandler: NextApiHandler = async (req, res) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   switch (req.body.method) {
     case "getMany":
-      return getManyHandler<Prisma.UserFindManyArgs>(req, res, {
+      return getManyHandler<Prisma.PostFindManyArgs>(req, res, {
         findMany: findMany(context),
       });
     case "getList":
-      return getListHandler<Prisma.UserFindManyArgs>(req, res, {
+      return getListHandler<Prisma.PostFindManyArgs>(req, res, {
         count: count(context),
         findMany: findMany(context),
       });
     case "create":
-      return await createHandler<Prisma.UserCreateArgs>(req, res, prisma.user);
+      return await createHandler<Prisma.PostCreateArgs>(req, res, prisma.post);
     case "getOne":
-      return await getOneHandler<Prisma.UserFindUniqueArgs>(req, res, {
+      return await getOneHandler<Prisma.PostFindUniqueArgs>(req, res, {
         findUnique: findUnique(context),
       });
     case "deleteMany":
-      return await deleteManyHandler(req, res, prisma.user);
+      return await deleteManyHandler(req, res, prisma.post);
     case "delete":
-      return await deleteHandler(req, res, prisma.user);
+      return await deleteHandler(req, res, prisma.post);
     case "getManyReference":
       return await getManyReferenceHandler(req, res, {
         findMany: findMany(context),
@@ -101,11 +101,11 @@ const apiHandler: NextApiHandler = async (req, res) => {
     case "update":
       return await updateHandler(req, res, {
         update: (
-          rawArgs: Omit<Prisma.UserUpdateArgs, "data"> & {
-            data: RaUser;
+          rawArgs: Omit<Prisma.PostUpdateArgs, "data"> & {
+            data: RaPost;
           },
         ) => {
-          const data: Prisma.UserUpdateInput = omit(
+          const data: Prisma.PostUpdateInput = omit(
             rawArgs.data,
             "apiaries",
             "accessLevel",
@@ -114,7 +114,7 @@ const apiHandler: NextApiHandler = async (req, res) => {
             "groupRelations",
             "inviteAccepted",
           );
-          return prisma.user.update({ ...rawArgs, data });
+          return prisma.post.update({ ...rawArgs, data });
         },
       });
     default:
