@@ -212,3 +212,9 @@ https://github.com/t3-oss/create-t3-turbo/blob/656965aff7db271e5e080242c4a3ce4da
 The stack originates from [create-t3-app](https://github.com/t3-oss/create-t3-app).
 
 A [blog post](https://jumr.dev/blog/t3-turbo) where I wrote how to migrate a T3 app into this.
+
+## Clerk Setup
+
+- Create a new Clerk project
+- Update the clerk webhook signing secret in the .env file
+- Setup the webhook with the app url
