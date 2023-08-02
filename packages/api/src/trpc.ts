@@ -6,12 +6,17 @@
  * tl;dr - this is where all the tRPC server stuff is created and plugged in.
  * The pieces you will need to use are documented accordingly near the end
  */
+// import type { NextApiRequest } from "next";
+// import { auth } from "@clerk/nextjs";
+// import { getAuth } from "@clerk/nextjs/server";
+import type { NextApiRequest } from "next";
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
+import type { OpenApiMeta } from "trpc-openapi";
 import { ZodError } from "zod";
 
-import { auth } from "@acme/auth";
 import type { Session } from "@acme/auth";
+import { auth } from "@acme/auth";
 import { prisma } from "@acme/db";
 
 /**
@@ -43,20 +48,43 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
   };
 };
 
+// interface TRPCContextParams {
+//   auth?: Session;
+//   req: Request;
+// }
+// | { openApi: true; req: NextApiRequest }
+// | { openApi?: false };
+
+type TRPCContextParams =
+  | {
+      appDirectory: true;
+      auth?: Session;
+      openApi?: boolean;
+      req: Request;
+    }
+  | {
+      appDirectory: false;
+      auth?: Session;
+      openApi?: boolean;
+      req: NextApiRequest;
+    };
+// | { appDirectory: false; auth?:Session; req: NextApiRequest; openApi?: boolean };
+
 /**
  * This is the actual context you'll use in your router. It will be used to
  * process every request that goes through your tRPC endpoint
  * @link https://trpc.io/docs/context
  */
-export const createTRPCContext = async (opts: {
-  req?: Request;
-  auth?: Session;
-}) => {
-  const session = opts.auth ?? (await auth());
-  const source = opts.req?.headers.get("x-trpc-source") ?? "unknown";
-
+export const createTRPCContext = async (params: TRPCContextParams) => {
+  // Get the session from the server using the unstable_getServerSession wrapper function
+  let source = "unknown";
+  const session = params?.auth ?? (await auth());
+  if (params.appDirectory) {
+    source = params?.req?.headers.get("x-trpc-source") ?? "unknown";
+  } else {
+    source = params?.req?.headers["x-trpc-source"]?.toString() ?? "unknown";
+  }
   console.log(">>> tRPC Request from", source, "by", session?.user);
-
   return createInnerTRPCContext({
     session,
   });
@@ -68,19 +96,22 @@ export const createTRPCContext = async (opts: {
  * This is where the trpc api is initialized, connecting the context and
  * transformer
  */
-const t = initTRPC.context<typeof createTRPCContext>().create({
-  transformer: superjson,
-  errorFormatter({ shape, error }) {
-    return {
-      ...shape,
-      data: {
-        ...shape.data,
-        zodError:
-          error.cause instanceof ZodError ? error.cause.flatten() : null,
-      },
-    };
-  },
-});
+const t = initTRPC
+  .meta<OpenApiMeta>()
+  .context<typeof createTRPCContext>()
+  .create({
+    transformer: superjson,
+    errorFormatter({ shape, error }) {
+      return {
+        ...shape,
+        data: {
+          ...shape.data,
+          zodError:
+            error.cause instanceof ZodError ? error.cause.flatten() : null,
+        },
+      };
+    },
+  });
 
 /**
  * 3. ROUTER & PROCEDURE (THE IMPORTANT BIT)
