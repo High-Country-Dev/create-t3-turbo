@@ -1,8 +1,8 @@
-import type { LabelHTMLAttributes, TextareaHTMLAttributes } from "react";
-import type { Control, FieldValues, Path } from "react-hook-form";
-import { Controller } from "react-hook-form";
+import type { LabelHTMLAttributes, TextareaHTMLAttributes } from 'react'
+import type { Control, FieldValues, Path } from 'react-hook-form'
+import { Controller } from 'react-hook-form'
 
-import { camelCaseToSpacedTitleCase } from "@acme/shared";
+import { camelCaseToSpacedTitleCase } from '@acme/shared'
 
 export const TextArea = <T extends FieldValues>({
   control,
@@ -13,17 +13,17 @@ export const TextArea = <T extends FieldValues>({
   inputProps,
   containerClassName,
 }: {
-  control: Control<T>;
-  numberOfLines: number;
-  name: Path<T>;
-  label?: string;
-  labelProps?: LabelHTMLAttributes<HTMLLabelElement>;
-  inputProps?: TextareaHTMLAttributes<HTMLTextAreaElement>;
-  containerClassName?: string;
+  control: Control<T>
+  numberOfLines: number
+  name: Path<T>
+  label?: string
+  labelProps?: LabelHTMLAttributes<HTMLLabelElement>
+  inputProps?: TextareaHTMLAttributes<HTMLTextAreaElement>
+  containerClassName?: string
 }) => {
-  const { className: labelClassName, ...labelRest } = labelProps ?? {};
-  const { className: inputClassName, ...inputRest } = inputProps ?? {};
-  const usedLabel = label ?? camelCaseToSpacedTitleCase(name ?? "");
+  const { className: labelClassName, ...labelRest } = labelProps ?? {}
+  const { className: inputClassName, ...inputRest } = inputProps ?? {}
+  const usedLabel = label ?? camelCaseToSpacedTitleCase(name ?? '')
   return (
     <Controller
       name={name}
@@ -38,7 +38,7 @@ export const TextArea = <T extends FieldValues>({
             >
               {usedLabel}
             </label>
-            <div className="mt-1">
+            <div className='mt-1'>
               <textarea
                 id={name}
                 className={`mb-2 block w-full rounded-md border-0 bg-white/10 p-2 py-1.5 text-white shadow-sm ring-inset ring-gray-300 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6 ${inputClassName}`}
@@ -48,8 +48,8 @@ export const TextArea = <T extends FieldValues>({
               />
             </div>
           </div>
-        );
+        )
       }}
     />
-  );
-};
+  )
+}

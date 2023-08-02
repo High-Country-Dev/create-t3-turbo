@@ -1,6 +1,6 @@
-import * as z from "zod";
+import * as z from 'zod'
 
-import * as imports from "../helpers";
+import * as imports from '../helpers'
 
 export const PhoneNumberModel = z.object({
   id: z.string(),
@@ -8,4 +8,4 @@ export const PhoneNumberModel = z.object({
   userId: z.string(),
   createdAt: imports.dateOrIso.nullish().nullish(),
   updatedAt: imports.dateOrIso.nullish().nullish(),
-});
+})

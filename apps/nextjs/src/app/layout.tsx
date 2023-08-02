@@ -1,38 +1,38 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { ClerkProvider } from "@clerk/nextjs";
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import { ClerkProvider } from '@clerk/nextjs'
 
-import "~/styles/globals.css";
+import '~/styles/globals.css'
 
-import { headers } from "next/headers";
+import { headers } from 'next/headers'
 
-import { TRPCReactProvider } from "./providers";
+import { TRPCReactProvider } from './providers'
 
 const fontSans = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
+  subsets: ['latin'],
+  variable: '--font-sans',
+})
 
 export const metadata: Metadata = {
-  title: "Create T3 Turbo",
-  description: "Simple monorepo with shared backend for web & mobile apps",
+  title: 'Create T3 Turbo',
+  description: 'Simple monorepo with shared backend for web & mobile apps',
   openGraph: {
-    title: "Create T3 Turbo",
-    description: "Simple monorepo with shared backend for web & mobile apps",
-    url: "https://create-t3-turbo.vercel.app",
-    siteName: "Create T3 Turbo",
+    title: 'Create T3 Turbo',
+    description: 'Simple monorepo with shared backend for web & mobile apps',
+    url: 'https://create-t3-turbo.vercel.app',
+    siteName: 'Create T3 Turbo',
   },
   twitter: {
-    card: "summary_large_image",
-    site: "@jullerino",
-    creator: "@jullerino",
+    card: 'summary_large_image',
+    site: '@jullerino',
+    creator: '@jullerino',
   },
-};
+}
 
 export default function Layout(props: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={["font-sans", fontSans.variable].join(" ")}>
+    <html lang='en'>
+      <body className={['font-sans', fontSans.variable].join(' ')}>
         <ClerkProvider>
           <TRPCReactProvider headers={headers()}>
             {props.children}
@@ -40,5 +40,5 @@ export default function Layout(props: { children: React.ReactNode }) {
         </ClerkProvider>
       </body>
     </html>
-  );
+  )
 }

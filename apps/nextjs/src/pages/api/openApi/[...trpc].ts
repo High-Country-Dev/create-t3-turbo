@@ -1,6 +1,6 @@
-import { createOpenApiNextHandler } from "trpc-openapi";
+import { createOpenApiNextHandler } from 'trpc-openapi'
 
-import { appRouter, createTRPCContext } from "@acme/api";
+import { appRouter, createTRPCContext } from '@acme/api'
 
 // export API handler
 export default createOpenApiNextHandler({
@@ -8,9 +8,9 @@ export default createOpenApiNextHandler({
   createContext: (params) =>
     createTRPCContext({ appDirectory: false, openApi: true, req: params.req }),
   onError: (opts) => {
-    console.log("openApi onError", opts.error);
+    console.log('openApi onError', opts.error)
   },
-});
+})
 
 // If you need to enable cors, you can do so like this:
 // const handler = async (req: NextApiRequest, res: NextApiResponse) => {

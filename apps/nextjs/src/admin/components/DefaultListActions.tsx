@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import { type ReactNode } from 'react'
 import {
   CreateButton,
   ExportButton,
@@ -10,16 +10,16 @@ import {
   type FilterButtonProps,
   type SelectColumnsButtonProps,
   type ToolbarProps,
-} from "react-admin";
+} from 'react-admin'
 
 type DefaultListActionsProps = {
-  children?: ReactNode;
-  toolbarProps?: ToolbarProps;
-  selectColumnsButtonProps?: SelectColumnsButtonProps;
-  filterButtonProps?: FilterButtonProps;
-  createButtonProps?: CreateButtonProps;
-  exportButtonProps?: ExportButtonProps;
-};
+  children?: ReactNode
+  toolbarProps?: ToolbarProps
+  selectColumnsButtonProps?: SelectColumnsButtonProps
+  filterButtonProps?: FilterButtonProps
+  createButtonProps?: CreateButtonProps
+  exportButtonProps?: ExportButtonProps
+}
 
 export const DefaultListActions = ({
   children,
@@ -38,4 +38,4 @@ export const DefaultListActions = ({
       <ExportButton {...exportButtonProps} />
     </TopToolbar>
   </>
-);
+)
