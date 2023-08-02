@@ -218,3 +218,7 @@ A [blog post](https://jumr.dev/blog/t3-turbo) where I wrote how to migrate a T3 
 - Create a new Clerk project
 - Update the clerk webhook signing secret in the .env file
 - Setup the webhook with the app url
+
+# Other thoughts
+
+- use Div100 component to handle 100vh for <main> because of issues with mobile browser components overlapping
