@@ -10,9 +10,11 @@ import superjson from "superjson";
 import { api } from "~/utils/api";
 import { env } from "~/env.mjs";
 
-const getBaseUrl = () => {
+export const getNextBaseUrl = () => {
   if (typeof window !== "undefined") return ""; // browser should use relative url
-  return env.NEXT_PUBLIC_URL;
+  if (env.NEXT_PUBLIC_URL) return env.NEXT_PUBLIC_URL; // SSR should use vercel url
+
+  return `http://localhost:3000`; // dev SSR should use localhost
 };
 
 export function TRPCReactProvider(props: {
@@ -39,8 +41,9 @@ export function TRPCReactProvider(props: {
             process.env.NODE_ENV === "development" ||
             (opts.direction === "down" && opts.result instanceof Error),
         }),
+        // unstable_httpBatchStreamLink({
         unstable_httpBatchStreamLink({
-          url: `${getBaseUrl()}/api/trpc`,
+          url: `${getNextBaseUrl()}/api/trpc`,
           headers() {
             const headers = new Map(props.headers);
             headers.set("x-trpc-source", "nextjs-react");
