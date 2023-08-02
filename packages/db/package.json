@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
+    "db:deploy": "pnpm with-env prisma migrate deploy",
     "db:generate": "pnpm with-env prisma generate",
     "db:push": "pnpm with-env prisma db push --skip-generate",
     "dev": "pnpm with-env prisma studio --port 5556",
@@ -14,7 +15,8 @@
   "dependencies": {
     "@acme/shared": "^0.1.0",
     "@prisma/client": "^5.0.0",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "zod-prisma": "^0.5.4"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.195",
