@@ -1,8 +1,8 @@
+"use client";
+
 import { Suspense } from "react";
+import { SignInButton, SignOutButton, useAuth, useUser } from "@clerk/nextjs";
 
-import { auth } from "@acme/auth";
-
-import { SignIn, SignOut } from "~/components/auth";
 import { CreatePostForm, PostList } from "./posts";
 
 export default function HomePage() {
@@ -23,29 +23,25 @@ export default function HomePage() {
   );
 }
 
-async function AuthShowcase() {
-  const session = await auth();
+const AuthShowcase = () => {
+  const { isSignedIn } = useAuth();
+  const { user } = useUser();
+  const userIdentifier =
+    user?.emailAddresses.find((e) => e.emailAddress)?.emailAddress ??
+    user?.fullName ??
+    "Unknown";
 
-  if (!session) {
-    return (
-      <SignIn
-        provider="discord"
-        className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
-      >
-        Sign in with Discord
-      </SignIn>
-    );
+  if (!isSignedIn) {
+    return <SignInButton />;
   }
 
   return (
     <div className="flex flex-col items-center justify-center gap-4">
       <p className="text-center text-2xl text-white">
-        {session && <span>Logged in as {session.user.name}</span>}
+        {user && <span>Logged in as {userIdentifier}</span>}
       </p>
 
-      <SignOut className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20">
-        Sign out
-      </SignOut>
+      <SignOutButton />
     </div>
   );
-}
+};

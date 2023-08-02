@@ -6,17 +6,18 @@
  * tl;dr - this is where all the tRPC server stuff is created and plugged in.
  * The pieces you will need to use are documented accordingly near the end
  */
-// import type { NextApiRequest } from "next";
-// import { auth } from "@clerk/nextjs";
-// import { getAuth } from "@clerk/nextjs/server";
 import type { NextApiRequest } from "next";
+import { auth } from "@clerk/nextjs";
+import type {
+  SignedInAuthObject,
+  SignedOutAuthObject,
+} from "@clerk/nextjs/api";
+import { getAuth } from "@clerk/nextjs/server";
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import type { OpenApiMeta } from "trpc-openapi";
 import { ZodError } from "zod";
 
-import type { Session } from "@acme/auth";
-import { auth } from "@acme/auth";
 import { prisma } from "@acme/db";
 
 /**
@@ -29,7 +30,7 @@ import { prisma } from "@acme/db";
  *
  */
 interface CreateContextOptions {
-  session: Session | null;
+  session: SignedInAuthObject | SignedOutAuthObject;
 }
 
 /**
@@ -48,23 +49,14 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
   };
 };
 
-// interface TRPCContextParams {
-//   auth?: Session;
-//   req: Request;
-// }
-// | { openApi: true; req: NextApiRequest }
-// | { openApi?: false };
-
 type TRPCContextParams =
   | {
       appDirectory: true;
-      auth?: Session;
       openApi?: boolean;
       req: Request;
     }
   | {
       appDirectory: false;
-      auth?: Session;
       openApi?: boolean;
       req: NextApiRequest;
     };
@@ -75,10 +67,10 @@ type TRPCContextParams =
  * process every request that goes through your tRPC endpoint
  * @link https://trpc.io/docs/context
  */
-export const createTRPCContext = async (params: TRPCContextParams) => {
+export const createTRPCContext = (params: TRPCContextParams) => {
   // Get the session from the server using the unstable_getServerSession wrapper function
   let source = "unknown";
-  const session = params?.auth ?? (await auth());
+  const session = !params.appDirectory ? getAuth(params.req) : auth();
   if (params.appDirectory) {
     source = params?.req?.headers.get("x-trpc-source") ?? "unknown";
   } else {
@@ -140,7 +132,7 @@ export const publicProcedure = t.procedure;
  * procedure
  */
 const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
-  if (!ctx.session?.user) {
+  if (!ctx.session?.userId) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
   return next({
