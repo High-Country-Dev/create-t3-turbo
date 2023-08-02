@@ -1,6 +1,6 @@
 import { generateOpenApiDocument } from "trpc-openapi";
 
-import { env } from "@acme/auth/env.mjs";
+import { env } from "@acme/auth";
 
 import { appRouter } from "./root";
 
