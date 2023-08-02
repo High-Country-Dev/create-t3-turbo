@@ -15,9 +15,11 @@ import type {
 import { getAuth } from "@clerk/nextjs/server";
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
+import { Webhook, WebhookVerificationError } from "svix";
 import type { OpenApiMeta } from "trpc-openapi";
 import { ZodError } from "zod";
 
+import { env } from "@acme/auth";
 import { prisma } from "@acme/db";
 
 /**
@@ -31,6 +33,7 @@ import { prisma } from "@acme/db";
  */
 interface CreateContextOptions {
   session: SignedInAuthObject | SignedOutAuthObject;
+  svixValidated: boolean;
 }
 
 /**
@@ -45,6 +48,7 @@ interface CreateContextOptions {
 const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
     session: opts.session,
+    svixValidated: opts.svixValidated,
     prisma,
   };
 };
@@ -71,14 +75,45 @@ export const createTRPCContext = (params: TRPCContextParams) => {
   // Get the session from the server using the unstable_getServerSession wrapper function
   let source = "unknown";
   const session = !params.appDirectory ? getAuth(params.req) : auth();
+  let svixValidated = false;
   if (params.appDirectory) {
     source = params?.req?.headers.get("x-trpc-source") ?? "unknown";
   } else {
     source = params?.req?.headers["x-trpc-source"]?.toString() ?? "unknown";
+    try {
+      const svixHeaders = {
+        "svix-timestamp":
+          params.req.headers["svix-timestamp"]?.toString() ?? "",
+        "svix-signature":
+          params.req.headers["svix-signature"]?.toString() ?? "",
+        "svix-id": params.req.headers["svix-id"]?.toString() ?? "",
+      };
+      const webhook = new Webhook(env.CLERK_WEBHOOK_SECRET);
+      const verifiedPayload = webhook.verify(
+        JSON.stringify(params.req.body),
+        svixHeaders,
+      );
+      svixValidated = !!verifiedPayload;
+    } catch (e) {
+      if (e instanceof WebhookVerificationError) {
+        // Let errors catch and continue
+        console.log("Svix validation error message", e.name, e.message);
+        console.log(
+          "This is ok if it is not a webhook that needs to be validated",
+        );
+      } else {
+        throw e;
+      }
+    }
+
+    console.log(">>> tRPC Request from", source, "by", session?.user);
   }
-  console.log(">>> tRPC Request from", source, "by", session?.user);
+
+  if (params?.openApi) {
+  }
   return createInnerTRPCContext({
     session,
+    svixValidated,
   });
 };
 
