@@ -15,10 +15,12 @@
   "dependencies": {
     "@acme/shared": "^0.1.0",
     "@expo/metro-config": "^0.10.7",
+    "@shopify/flash-list": "1.4.3",
     "@tanstack/react-query": "^4.32.0",
     "@trpc/client": "^10.36.0",
     "@trpc/react-query": "^10.36.0",
     "@trpc/server": "^10.36.0",
+    "eas-cli": "^3.14.0",
     "expo": "^49.0.6",
     "expo-constants": "~14.4.2",
     "expo-linking": "~5.0.2",
