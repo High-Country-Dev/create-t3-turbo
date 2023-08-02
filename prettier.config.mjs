@@ -6,9 +6,9 @@
 const config = {
   arrowParens: "always",
   printWidth: 80,
-  singleQuote: false, // TODO: true,
-  jsxSingleQuote: false, // TODO: true,
-  semi: true, // TODO: false,
+  singleQuote: true,
+  jsxSingleQuote: true,
+  semi: false,
   trailingComma: "all",
   tabWidth: 2,
   plugins: [
