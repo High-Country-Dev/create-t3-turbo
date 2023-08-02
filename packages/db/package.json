@@ -9,8 +9,12 @@
     "db:deploy": "pnpm with-env prisma migrate deploy",
     "db:generate": "pnpm with-env prisma generate",
     "db:push": "pnpm with-env prisma db push --skip-generate",
+    "db:seed": "pnpm with-env prisma db seed",
     "dev": "pnpm with-env prisma studio --port 5556",
     "with-env": "dotenv -e ../../.env --"
+  },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
     "@acme/shared": "^0.1.0",
@@ -22,6 +26,7 @@
     "@types/lodash": "^4.14.195",
     "dotenv-cli": "^7.2.1",
     "prisma": "^5.0.0",
+    "ts-node": "^10.9.1",
     "typescript": "^5.1.6"
   }
 }

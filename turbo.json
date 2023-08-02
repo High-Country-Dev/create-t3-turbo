@@ -14,6 +14,10 @@
       "inputs": ["prisma/schema.prisma"],
       "cache": false
     },
+    "db:seed": {
+      "inputs": ["prisma/schema.prisma"],
+      "cache": false
+    },
     "dev": {
       "persistent": true,
       "cache": false
@@ -25,9 +29,6 @@
     "lint": {},
     "lint:fix": {},
     "clean": {
-      "cache": false
-    },
-    "//#clean": {
       "cache": false
     },
     "type-check": {
