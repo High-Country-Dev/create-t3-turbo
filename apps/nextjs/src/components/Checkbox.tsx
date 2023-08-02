@@ -1,8 +1,8 @@
-import type { InputHTMLAttributes, LabelHTMLAttributes } from "react";
-import type { Control, FieldValues, Path } from "react-hook-form";
-import { Controller } from "react-hook-form";
+import type { InputHTMLAttributes, LabelHTMLAttributes } from 'react'
+import type { Control, FieldValues, Path } from 'react-hook-form'
+import { Controller } from 'react-hook-form'
 
-import { camelCaseToSpacedTitleCase, classNames } from "@acme/shared";
+import { camelCaseToSpacedTitleCase, classNames } from '@acme/shared'
 
 export const Checkbox = <T extends FieldValues>({
   control,
@@ -12,16 +12,16 @@ export const Checkbox = <T extends FieldValues>({
   inputProps,
   containerClassName,
 }: {
-  control: Control<T>;
-  name: Path<T>;
-  label?: string;
-  labelProps?: LabelHTMLAttributes<HTMLLabelElement>;
-  inputProps?: Omit<InputHTMLAttributes<HTMLInputElement>, "type">;
-  containerClassName?: string;
+  control: Control<T>
+  name: Path<T>
+  label?: string
+  labelProps?: LabelHTMLAttributes<HTMLLabelElement>
+  inputProps?: Omit<InputHTMLAttributes<HTMLInputElement>, 'type'>
+  containerClassName?: string
 }) => {
-  const { className: labelClassName, ...labelRest } = labelProps ?? {};
-  const { className: inputClassName, ...inputRest } = inputProps ?? {};
-  const usedLabel = label ?? camelCaseToSpacedTitleCase(name ?? "");
+  const { className: labelClassName, ...labelRest } = labelProps ?? {}
+  const { className: inputClassName, ...inputRest } = inputProps ?? {}
+  const usedLabel = label ?? camelCaseToSpacedTitleCase(name ?? '')
   return (
     <Controller
       name={name}
@@ -38,20 +38,20 @@ export const Checkbox = <T extends FieldValues>({
             </label>
             <input
               id={name}
-              type="checkbox"
+              type='checkbox'
               className={classNames(
-                "mt-1 block h-4 w-4 rounded border-gray-300 text-green-700 focus:ring-green-700 focus:ring-offset-gray-900",
+                'mt-1 block h-4 w-4 rounded border-gray-300 text-green-700 focus:ring-green-700 focus:ring-offset-gray-900',
                 inputClassName,
               )}
               onChange={onChange}
               {...inputRest}
               {...fieldRest}
-              value={value ?? ""}
+              value={value ?? ''}
               checked={value}
             />
           </div>
-        );
+        )
       }}
     />
-  );
-};
+  )
+}

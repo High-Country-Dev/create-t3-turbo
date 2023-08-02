@@ -1,24 +1,24 @@
-import type { NextMiddlewareResult } from "next/dist/server/web/types";
-import type { NextRequest } from "next/server";
-import { NextResponse } from "next/server";
-import { authMiddleware, redirectToSignIn } from "@clerk/nextjs";
-import type { AuthObject } from "@clerk/nextjs/dist/types/server";
+import type { NextMiddlewareResult } from 'next/dist/server/web/types'
+import type { NextRequest } from 'next/server'
+import { NextResponse } from 'next/server'
+import { authMiddleware, redirectToSignIn } from '@clerk/nextjs'
+import type { AuthObject } from '@clerk/nextjs/dist/types/server'
 
 const afterAuth = (
   auth: AuthObject & {
-    isPublicRoute: boolean;
-    isApiRoute: boolean;
+    isPublicRoute: boolean
+    isApiRoute: boolean
   },
   req: NextRequest,
 ): NextMiddlewareResult => {
   if (!auth.userId && !auth.isPublicRoute) {
     if (!auth.isApiRoute) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return redirectToSignIn({ returnBackUrl: req.url });
+      return redirectToSignIn({ returnBackUrl: req.url })
     }
   }
-  return NextResponse.next();
-};
+  return NextResponse.next()
+}
 
 export const config: { matcher: string[] } = {
   matcher: [
@@ -30,12 +30,12 @@ export const config: { matcher: string[] } = {
      *
      * This includes images, and requests from TRPC.
      */
-    "/(.*?trpc.*?|(?!static|.*\\..*|_next|favicon.ico).*)",
+    '/(.*?trpc.*?|(?!static|.*\\..*|_next|favicon.ico).*)',
   ],
   // https://clerk.com/docs/nextjs/trpc
   // matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
-};
+}
 
 export default authMiddleware({
   afterAuth,
-});
+})

@@ -1,8 +1,8 @@
-import type { SelectHTMLAttributes } from "react";
-import type { Control, FieldValues, Path } from "react-hook-form";
-import { Controller } from "react-hook-form";
+import type { SelectHTMLAttributes } from 'react'
+import type { Control, FieldValues, Path } from 'react-hook-form'
+import { Controller } from 'react-hook-form'
 
-import { camelCaseToSpacedTitleCase, classNames } from "@acme/shared";
+import { camelCaseToSpacedTitleCase, classNames } from '@acme/shared'
 
 export const Select = <T extends FieldValues>({
   label,
@@ -13,21 +13,21 @@ export const Select = <T extends FieldValues>({
   containerClassName,
   ...props
 }: SelectHTMLAttributes<HTMLSelectElement> & {
-  control: Control<T>;
-  label?: string;
-  name: Path<T>;
+  control: Control<T>
+  label?: string
+  name: Path<T>
   options:
     | Record<string, string>
     | string[]
-    | { label: string; value: string }[];
-  containerClassName?: string;
+    | { label: string; value: string }[]
+  containerClassName?: string
 }) => {
-  const usedLabel = label ?? camelCaseToSpacedTitleCase(name ?? "");
+  const usedLabel = label ?? camelCaseToSpacedTitleCase(name ?? '')
   return (
-    <div className={classNames("mb-1", containerClassName)}>
+    <div className={classNames('mb-1', containerClassName)}>
       <label
         htmlFor={name}
-        className="font-regular block text-sm leading-6 text-white"
+        className='font-regular block text-sm leading-6 text-white'
       >
         {usedLabel}
       </label>
@@ -37,7 +37,7 @@ export const Select = <T extends FieldValues>({
         render={({ field }) => {
           const optionsArray = Array.isArray(options)
             ? options
-            : Object.values(options);
+            : Object.values(options)
           return (
             <select
               id={name}
@@ -49,7 +49,7 @@ export const Select = <T extends FieldValues>({
                 <option disabled>{props.placeholder}</option>
               )}
               {optionsArray?.map((o) =>
-                typeof o === "string" ? (
+                typeof o === 'string' ? (
                   <option key={o} value={o}>
                     {o}
                   </option>
@@ -60,9 +60,9 @@ export const Select = <T extends FieldValues>({
                 ),
               )}
             </select>
-          );
+          )
         }}
       />
     </div>
-  );
-};
+  )
+}

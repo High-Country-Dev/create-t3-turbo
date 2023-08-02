@@ -1,13 +1,13 @@
-import React from "react";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import Constants from "expo-constants";
-import { Stack } from "expo-router";
-import { StatusBar } from "expo-status-bar";
-import { ClerkProvider } from "@clerk/clerk-expo";
+import React from 'react'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
+import Constants from 'expo-constants'
+import { Stack } from 'expo-router'
+import { StatusBar } from 'expo-status-bar'
+import { ClerkProvider } from '@clerk/clerk-expo'
 
-import { TRPCProvider } from "~/utils/api";
-import { tokenCache } from "~/utils/cache";
-import type { EasExtra } from "~/utils/types";
+import { TRPCProvider } from '~/utils/api'
+import { tokenCache } from '~/utils/cache'
+import type { EasExtra } from '~/utils/types'
 
 // This is the main layout of the app
 // It wraps your pages with the providers they need
@@ -28,7 +28,7 @@ const RootLayout = () => {
           <Stack
             screenOptions={{
               headerStyle: {
-                backgroundColor: "#f472b6",
+                backgroundColor: '#f472b6',
               },
             }}
           />
@@ -36,7 +36,7 @@ const RootLayout = () => {
         </SafeAreaProvider>
       </TRPCProvider>
     </ClerkProvider>
-  );
-};
+  )
+}
 
-export default RootLayout;
+export default RootLayout

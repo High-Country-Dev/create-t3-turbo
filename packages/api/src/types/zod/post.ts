@@ -1,5 +1,6 @@
-import * as z from "zod"
-import * as imports from "../helpers"
+import * as z from 'zod'
+
+import * as imports from '../helpers'
 
 export const PostModel = z.object({
   id: z.string(),

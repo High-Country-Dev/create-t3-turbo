@@ -1,3 +1,3 @@
-import { publicProcedure } from "../trpc";
+import { publicProcedure } from '../trpc'
 
-export const pingRouter = publicProcedure.query(() => "alive");
+export const pingRouter = publicProcedure.query(() => 'alive')

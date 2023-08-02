@@ -6,21 +6,18 @@
  * tl;dr - this is where all the tRPC server stuff is created and plugged in.
  * The pieces you will need to use are documented accordingly near the end
  */
-import type { NextApiRequest } from "next";
-import { auth } from "@clerk/nextjs";
-import type {
-  SignedInAuthObject,
-  SignedOutAuthObject,
-} from "@clerk/nextjs/api";
-import { getAuth } from "@clerk/nextjs/server";
-import { initTRPC, TRPCError } from "@trpc/server";
-import superjson from "superjson";
-import { Webhook, WebhookVerificationError } from "svix";
-import type { OpenApiMeta } from "trpc-openapi";
-import { ZodError } from "zod";
+import type { NextApiRequest } from 'next'
+import { auth } from '@clerk/nextjs'
+import type { SignedInAuthObject, SignedOutAuthObject } from '@clerk/nextjs/api'
+import { getAuth } from '@clerk/nextjs/server'
+import { initTRPC, TRPCError } from '@trpc/server'
+import superjson from 'superjson'
+import { Webhook, WebhookVerificationError } from 'svix'
+import type { OpenApiMeta } from 'trpc-openapi'
+import { ZodError } from 'zod'
 
-import { env } from "@acme/auth";
-import { prisma } from "@acme/db";
+import { env } from '@acme/auth'
+import { prisma } from '@acme/db'
 
 /**
  * 1. CONTEXT
@@ -32,8 +29,8 @@ import { prisma } from "@acme/db";
  *
  */
 interface CreateContextOptions {
-  session: SignedInAuthObject | SignedOutAuthObject;
-  svixValidated: boolean;
+  session: SignedInAuthObject | SignedOutAuthObject
+  svixValidated: boolean
 }
 
 /**
@@ -50,20 +47,20 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
     session: opts.session,
     svixValidated: opts.svixValidated,
     prisma,
-  };
-};
+  }
+}
 
 type TRPCContextParams =
   | {
-      appDirectory: true;
-      openApi?: boolean;
-      req: Request;
+      appDirectory: true
+      openApi?: boolean
+      req: Request
     }
   | {
-      appDirectory: false;
-      openApi?: boolean;
-      req: NextApiRequest;
-    };
+      appDirectory: false
+      openApi?: boolean
+      req: NextApiRequest
+    }
 // | { appDirectory: false; auth?:Session; req: NextApiRequest; openApi?: boolean };
 
 /**
@@ -73,40 +70,40 @@ type TRPCContextParams =
  */
 export const createTRPCContext = (params: TRPCContextParams) => {
   // Get the session from the server using the unstable_getServerSession wrapper function
-  let source = "unknown";
-  const session = !params.appDirectory ? getAuth(params.req) : auth();
-  let svixValidated = false;
+  let source = 'unknown'
+  const session = !params.appDirectory ? getAuth(params.req) : auth()
+  let svixValidated = false
   if (params.appDirectory) {
-    source = params?.req?.headers.get("x-trpc-source") ?? "unknown";
+    source = params?.req?.headers.get('x-trpc-source') ?? 'unknown'
   } else {
-    source = params?.req?.headers["x-trpc-source"]?.toString() ?? "unknown";
+    source = params?.req?.headers['x-trpc-source']?.toString() ?? 'unknown'
     try {
       const svixHeaders = {
-        "svix-timestamp":
-          params.req.headers["svix-timestamp"]?.toString() ?? "",
-        "svix-signature":
-          params.req.headers["svix-signature"]?.toString() ?? "",
-        "svix-id": params.req.headers["svix-id"]?.toString() ?? "",
-      };
-      const webhook = new Webhook(env.CLERK_WEBHOOK_SECRET);
+        'svix-timestamp':
+          params.req.headers['svix-timestamp']?.toString() ?? '',
+        'svix-signature':
+          params.req.headers['svix-signature']?.toString() ?? '',
+        'svix-id': params.req.headers['svix-id']?.toString() ?? '',
+      }
+      const webhook = new Webhook(env.CLERK_WEBHOOK_SECRET)
       const verifiedPayload = webhook.verify(
         JSON.stringify(params.req.body),
         svixHeaders,
-      );
-      svixValidated = !!verifiedPayload;
+      )
+      svixValidated = !!verifiedPayload
     } catch (e) {
       if (e instanceof WebhookVerificationError) {
         // Let errors catch and continue
-        console.log("Svix validation error message", e.name, e.message);
+        console.log('Svix validation error message', e.name, e.message)
         console.log(
-          "This is ok if it is not a webhook that needs to be validated",
-        );
+          'This is ok if it is not a webhook that needs to be validated',
+        )
       } else {
-        throw e;
+        throw e
       }
     }
 
-    console.log(">>> tRPC Request from", source, "by", session?.user);
+    console.log('>>> tRPC Request from', source, 'by', session?.user)
   }
 
   if (params?.openApi) {
@@ -114,8 +111,8 @@ export const createTRPCContext = (params: TRPCContextParams) => {
   return createInnerTRPCContext({
     session,
     svixValidated,
-  });
-};
+  })
+}
 
 /**
  * 2. INITIALIZATION
@@ -136,9 +133,9 @@ const t = initTRPC
           zodError:
             error.cause instanceof ZodError ? error.cause.flatten() : null,
         },
-      };
+      }
     },
-  });
+  })
 
 /**
  * 3. ROUTER & PROCEDURE (THE IMPORTANT BIT)
@@ -151,7 +148,7 @@ const t = initTRPC
  * This is how you create new routers and subrouters in your tRPC API
  * @see https://trpc.io/docs/router
  */
-export const createTRPCRouter = t.router;
+export const createTRPCRouter = t.router
 
 /**
  * Public (unauthed) procedure
@@ -160,7 +157,7 @@ export const createTRPCRouter = t.router;
  * tRPC API. It does not guarantee that a user querying is authorized, but you
  * can still access user session data if they are logged in
  */
-export const publicProcedure = t.procedure;
+export const publicProcedure = t.procedure
 
 /**
  * Reusable middleware that enforces users are logged in before running the
@@ -168,15 +165,15 @@ export const publicProcedure = t.procedure;
  */
 const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
   if (!ctx.session?.userId) {
-    throw new TRPCError({ code: "UNAUTHORIZED" });
+    throw new TRPCError({ code: 'UNAUTHORIZED' })
   }
   return next({
     ctx: {
       // infers the `session` as non-nullable
       session: { ...ctx.session, user: ctx.session.user },
     },
-  });
-});
+  })
+})
 
 /**
  * Protected (authed) procedure
@@ -187,4 +184,4 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
  *
  * @see https://trpc.io/docs/procedures
  */
-export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
+export const protectedProcedure = t.procedure.use(enforceUserIsAuthed)

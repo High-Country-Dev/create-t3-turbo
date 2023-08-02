@@ -1,37 +1,37 @@
-import { z } from "zod";
+import { z } from 'zod'
 
-import { UserModel } from "../zod";
+import { UserModel } from '../zod'
 
-export const CreateUserModel = UserModel.partial({ id: true });
-export type CreateUserModel = z.infer<typeof CreateUserModel>;
+export const CreateUserModel = UserModel.partial({ id: true })
+export type CreateUserModel = z.infer<typeof CreateUserModel>
 
 export const ClerkNonUserWebhookType = [
-  "email.created",
-  "organization.created",
-  "organization.deleted",
-  "organization.updated",
-  "organizationInvitation.accepted",
-  "organizationInvitation.created",
-  "organizationInvitation.revoked",
-  "organizationMembership.created",
-  "organizationMembership.deleted",
-  "organizationMembership.updated",
-  "session.created",
-  "session.ended",
-  "session.removed",
-  "session.revoked",
-  "sms.created",
-] as const;
+  'email.created',
+  'organization.created',
+  'organization.deleted',
+  'organization.updated',
+  'organizationInvitation.accepted',
+  'organizationInvitation.created',
+  'organizationInvitation.revoked',
+  'organizationMembership.created',
+  'organizationMembership.deleted',
+  'organizationMembership.updated',
+  'session.created',
+  'session.ended',
+  'session.removed',
+  'session.revoked',
+  'sms.created',
+] as const
 export const ClerkUserWebhookType = [
-  "user.created",
-  "user.deleted",
-  "user.updated",
-] as const;
+  'user.created',
+  'user.deleted',
+  'user.updated',
+] as const
 
 export const ClerkResource = z.object({
   id: z.string().optional(),
   pathRoot: z.string(),
-});
+})
 
 export const ClerkVerification = z.object({
   status: z.string(),
@@ -40,19 +40,19 @@ export const ClerkVerification = z.object({
   attempts: z.number().nullable(),
   expireAt: z.number().nullable(),
   nonce: z.string().nullable(),
-});
+})
 
 export const ClerkIdentificationLink = z.object({
   id: z.string(),
   type: z.string(),
-});
+})
 
 export const ClerkEmailAddress = ClerkResource.extend({
   id: z.string(),
   emailAddress: z.string(),
   verification: ClerkVerification.nullable(),
   linkedTo: ClerkIdentificationLink.array(),
-});
+})
 
 export const ClerkPhoneNumber = z.object({
   id: z.string(),
@@ -61,7 +61,7 @@ export const ClerkPhoneNumber = z.object({
   defaultSecondFactor: z.boolean(),
   verification: ClerkVerification.nullable(),
   linkedTo: ClerkIdentificationLink.array(),
-});
+})
 
 export const ClerkExternalAccount = z.object({
   id: z.string(),
@@ -78,7 +78,7 @@ export const ClerkExternalAccount = z.object({
   publicMetadata: z.record(z.unknown()).nullable(),
   label: z.string().nullish(),
   verification: ClerkVerification.nullable(),
-});
+})
 
 export const ClerkUser = z
   .object({
@@ -110,17 +110,17 @@ export const ClerkUser = z
     web3Wallets: z.unknown(),
     externalAccounts: ClerkExternalAccount,
   })
-  .passthrough();
+  .passthrough()
 
-export const ClerkWebhookEvent = z.discriminatedUnion("type", [
+export const ClerkWebhookEvent = z.discriminatedUnion('type', [
   z.object({
-    object: z.literal("event"),
+    object: z.literal('event'),
     type: z.enum(ClerkUserWebhookType),
     data: ClerkUser,
   }),
   z.object({
-    object: z.literal("event"),
+    object: z.literal('event'),
     type: z.enum(ClerkNonUserWebhookType),
     data: z.unknown(),
   }),
-]);
+])

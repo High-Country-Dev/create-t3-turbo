@@ -1,32 +1,32 @@
-export type Truthy<T> = T extends false | "" | 0 | null | undefined ? never : T;
+export type Truthy<T> = T extends false | '' | 0 | null | undefined ? never : T
 
-export type Dict<T, K extends string = string> = { [id in K]: T | undefined };
+export type Dict<T, K extends string = string> = { [id in K]: T | undefined }
 
-export type Writeable<T> = { -readonly [P in keyof T]: T[P] };
+export type Writeable<T> = { -readonly [P in keyof T]: T[P] }
 
 export type DeepWriteable<T> = {
-  -readonly [P in keyof T]: DeepWriteable<T[P]>;
-};
+  -readonly [P in keyof T]: DeepWriteable<T[P]>
+}
 
-export type WithNull<T> = { [P in keyof T]: T[P] | null };
+export type WithNull<T> = { [P in keyof T]: T[P] | null }
 
 export type GetIndexedField<T, K> = K extends keyof T
   ? T[K]
   : K extends `${number}`
-  ? "0" extends keyof T
+  ? '0' extends keyof T
     ? undefined
     : number extends keyof T
     ? T[number]
     : undefined
-  : undefined;
+  : undefined
 
 export type FieldWithPossiblyUndefined<T, Key> =
   | GetFieldType<Exclude<T, undefined>, Key>
-  | Extract<T, undefined>;
+  | Extract<T, undefined>
 
 export type IndexedFieldWithPossiblyUndefined<T, Key> =
   | GetIndexedField<Exclude<T, undefined>, Key>
-  | Extract<T, undefined>;
+  | Extract<T, undefined>
 
 export type FlattenObjectKeys<
   T extends Record<string, unknown>,
@@ -35,7 +35,7 @@ export type FlattenObjectKeys<
   ? T[Key] extends Record<string, unknown>
     ? `${Key}.${FlattenObjectKeys<T[Key]>}` | Key
     : `${Key}`
-  : never;
+  : never
 
 export type GetFieldType<T, P> = P extends `${infer Left}.${infer Right}`
   ? Left extends keyof T
@@ -54,4 +54,4 @@ export type GetFieldType<T, P> = P extends `${infer Left}.${infer Right}`
   ? FieldKey extends keyof T
     ? IndexedFieldWithPossiblyUndefined<T[FieldKey], IndexKey>
     : undefined
-  : undefined;
+  : undefined

@@ -1,6 +1,6 @@
-import type { UserJSON } from "@clerk/backend";
+import type { UserJSON } from '@clerk/backend'
 
-import type { Prisma } from "../common/prismaTypes";
+import type { Prisma } from '../common/prismaTypes'
 
 // For functions that are shared but specific to the app (e.g. rucksack functions)
 export const prismaUserFromClerkUser = (
@@ -37,5 +37,5 @@ export const prismaUserFromClerkUser = (
         phoneNumber: phone.phone_number,
       })),
     },
-  };
-};
+  }
+}
