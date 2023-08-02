@@ -5,7 +5,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ReactQueryStreamedHydration } from "@tanstack/react-query-next-experimental";
 import { loggerLink, unstable_httpBatchStreamLink } from "@trpc/client";
+import PlausibleProvider from "next-plausible";
 import superjson from "superjson";
+
+import { removeProtocol } from "@acme/shared";
 
 import { api } from "~/utils/api";
 import { env } from "~/env.mjs";
@@ -55,13 +58,20 @@ export function TRPCReactProvider(props: {
   );
 
   return (
-    <api.Provider client={trpcClient} queryClient={queryClient}>
-      <QueryClientProvider client={queryClient}>
-        <ReactQueryStreamedHydration transformer={superjson}>
-          {props.children}
-        </ReactQueryStreamedHydration>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </api.Provider>
+    <PlausibleProvider
+      domain={removeProtocol(env.NEXT_PUBLIC_URL)}
+      enabled
+      taggedEvents
+      trackLocalhost={env.NEXT_PUBLIC_URL.includes("localhost")}
+    >
+      <api.Provider client={trpcClient} queryClient={queryClient}>
+        <QueryClientProvider client={queryClient}>
+          <ReactQueryStreamedHydration transformer={superjson}>
+            {props.children}
+          </ReactQueryStreamedHydration>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
+      </api.Provider>
+    </PlausibleProvider>
   );
 }
