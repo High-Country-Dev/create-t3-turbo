@@ -16,7 +16,7 @@ generator zod {
     relationModel = false
     modelCase     = "PascalCase"
     modelSuffix   = "Model"
-    imports       = "../../api/src/types/helpers"
+    imports       = "../../api/src/types/helper"
 }
 
 model Post {

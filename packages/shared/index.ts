@@ -2,6 +2,7 @@ export * from './src/common/constants'
 export * from './src/common/enums'
 export * from './src/common/functions'
 export * from './src/common/prismaTypes'
+export * from './src/common/schemas'
 export * from './src/common/types'
 
 export * from './src/app/constants'

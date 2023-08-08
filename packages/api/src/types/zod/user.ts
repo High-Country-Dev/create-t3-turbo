@@ -1,6 +1,6 @@
 import * as z from 'zod'
 
-import * as imports from '../helpers'
+import * as imports from '../helper'
 
 // Helper schema for JSON fields
 type Literal = boolean | number | string
