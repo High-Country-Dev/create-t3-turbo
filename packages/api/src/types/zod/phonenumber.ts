@@ -1,6 +1,5 @@
-import * as z from 'zod'
-
-import * as imports from '../helper'
+import * as z from "zod"
+import * as imports from "../helper"
 
 export const PhoneNumberModel = z.object({
   id: z.string(),
