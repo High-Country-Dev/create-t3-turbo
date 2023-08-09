@@ -1,0 +1,63 @@
+name: EAS Update
+on:
+  workflow_dispatch:
+  # push:
+  # branches:
+  # - master
+  # - staging
+jobs:
+  build:
+    name: EAS Update w Incremented Number
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check for EXPO_TOKEN
+        run: |
+          if [ -z "${{ secrets.EXPO_TOKEN }}" ]; then
+            echo "You must provide an EXPO_TOKEN secret linked to this project's Expo account in this repo's secrets. Learn more: https://docs.expo.dev/eas-update/github-actions"
+            exit 1
+          fi
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: yarn
+
+      - name: Setup Expo and EAS
+        uses: expo/expo-github-action@v7
+        with:
+          expo-version: latest
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Restore cache
+        id: yarn-cache
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock', '**/schema.prisma') }}
+          restore-keys: ${{ runner.os }}-yarn-
+
+      - name: Install deps
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: yarn --immutable
+
+      - name: Get next update number
+        run: echo "CI_NEXT_UPDATE_NUMBER=$(.github/scripts/CI_NEXT_UPDATE_NUMBER.sh)" >> $GITHUB_ENV
+
+      - name: Publish prod update
+        if: github.ref == 'refs/heads/master'
+        run: yarn workspace @acme/expo eas update --auto --branch prod
+
+      - name: Publish non-prod update
+        if: github.ref != 'refs/heads/master'
+        run: yarn workspace @acme/expo eas update --auto --branch ${GITHUB_REF#refs/heads/}
+
+      - name: Make tag
+        run: git tag update-${CI_NEXT_UPDATE_NUMBER}
+
+      - name: Push tag
+        run: git push origin update-${CI_NEXT_UPDATE_NUMBER}

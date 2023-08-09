@@ -1,0 +1,62 @@
+name: EAS Build
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    name: EAS Build w Incremented Number
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check for EXPO_TOKEN
+        run: |
+          if [ -z "${{ secrets.EXPO_TOKEN }}" ]; then
+            echo "You must provide an EXPO_TOKEN secret linked to this project's Expo account in this repo's secrets. Learn more: https://docs.expo.dev/eas-update/github-actions"
+            exit 1
+          fi
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: yarn
+
+      - name: Setup Expo and EAS
+        uses: expo/expo-github-action@v7
+        with:
+          expo-version: latest
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Restore cache
+        id: yarn-cache
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock', '**/schema.prisma') }}
+          restore-keys: ${{ runner.os }}-yarn-
+
+      - name: Install deps
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: yarn --immutable
+
+      - name: Get next build number
+        run: echo "CI_NEXT_BUILD_NUMBER=$(.github/scripts/CI_NEXT_BUILD_NUMBER.sh)" >> $GITHUB_ENV
+
+      - name: Increment build number
+        run: yarn workspace @acme/expo react-native-version --increment-build --never-amend --set-build ${CI_NEXT_BUILD_NUMBER}
+
+      - name: Make tag
+        run: git tag build-${CI_NEXT_BUILD_NUMBER}
+
+      - name: Push tag
+        run: git push origin build-${CI_NEXT_BUILD_NUMBER}
+
+      - name: EAS prod build
+        if: github.ref == 'refs/heads/master'
+        run: yarn workspace @acme/expo eas build --platform all --profile prod --no-wait --auto-submit --non-interactive
+
+      - name: EAS non-prod build
+        if: github.ref != 'refs/heads/master'
+        run: yarn workspace @acme/expo eas build --platform all --profile ${GITHUB_REF#refs/heads/} --no-wait --auto-submit --non-interactive
