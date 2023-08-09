@@ -9,7 +9,7 @@
     "dev:android": "expo start --android",
     "dev:ios": "expo start --ios",
     "lint": "eslint .",
-    "lint:fix": "pnpm lint --fix",
+    "lint:fix": "yarn lint --fix",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {

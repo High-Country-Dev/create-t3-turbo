@@ -23,7 +23,7 @@ It uses [Turborepo](https://turborepo.org/) and contains:
 ```
 .github
   └─ workflows
-        └─ CI with pnpm cache setup
+        └─ CI with yarn cache setup
 .vscode
   └─ Recommended extensions and settings for VSCode users
 apps
@@ -73,7 +73,7 @@ To get it running, follow the steps below:
 
 ```diff
 # Install dependencies
-pnpm i
+yarn
 
 # In packages/db/prisma update schema.prisma provider to use sqlite
 # or use your own database provider
@@ -85,7 +85,7 @@ pnpm i
 cp .env.example .env
 
 # Push the Prisma schema to your database
-pnpm db:push
+yarn db:push
 ```
 
 ### Configure Expo `dev`-script
@@ -93,15 +93,15 @@ pnpm db:push
 #### Use iOS Simulator
 
 1. Make sure you have XCode and XCommand Line Tools installed [as shown on expo docs](https://docs.expo.dev/workflow/ios-simulator/).
-   > **NOTE:** If you just installed XCode, or if you have updated it, you need to open the simulator manually once. Run `npx expo start` in the root dir, and then enter `I` to launch Expo Go. After the manual launch, you can run `pnpm dev` in the root directory.
+   > **NOTE:** If you just installed XCode, or if you have updated it, you need to open the simulator manually once. Run `npx expo start` in the root dir, and then enter `I` to launch Expo Go. After the manual launch, you can run `yarn dev` in the root directory.
 
 ```diff
 +  "dev": "expo start --ios",
 ```
 
-3. Run `pnpm dev` at the project root folder.
+3. Run `yarn dev` at the project root folder.
 
-> **TIP:** It might be easier to run each app in separate terminal windows so you get the logs from each app separately. This is also required if you want your terminals to be interactive, e.g. to access the Expo QR code. You can run `pnpm --filter expo dev` and `pnpm --filter nextjs dev` to run each app in a separate terminal window.
+> **TIP:** It might be easier to run each app in separate terminal windows so you get the logs from each app separately. This is also required if you want your terminals to be interactive, e.g. to access the Expo QR code. You can run `yarn workspace @acme/expo dev` and `yarn workspace @acme/nextjs dev` to run each app in a separate terminal window.
 
 #### For Android
 
@@ -112,7 +112,7 @@ pnpm db:push
 +  "dev": "expo start --android",
 ```
 
-3. Run `pnpm dev` at the project root folder.
+3. Run `yarn dev` at the project root folder.
 
 ## Deployment
 
@@ -140,8 +140,6 @@ Let's deploy the Next.js application to [Vercel](https://vercel.com/). If you ha
 
 ### Expo
 
-Update on 06-22-23: https://github.com/t3-oss/create-t3-turbo/issues/402 pnpm lockfile causes eas build issues
-
 Deploying your Expo application works slightly differently compared to Next.js on the web. Instead of "deploying" your app online, you need to submit production builds of your app to the app stores, like [Apple App Store](https://www.apple.com/app-store/) and [Google Play](https://play.google.com/store/apps). You can read the full [Distributing your app](https://docs.expo.dev/distribution/introduction/), including best practices, in the Expo docs.
 
 1. Make sure to modify the `getMobileBaseUrl` function to point to your backend's production URL:
@@ -153,7 +151,7 @@ https://github.com/t3-oss/create-t3-turbo/blob/656965aff7db271e5e080242c4a3ce4da
 
    ```bash
    // Install the EAS CLI
-   $ pnpm add -g eas-cli
+   $ yarn add -g eas-cli
 
    // Log in with your Expo account
    $ eas login
@@ -188,7 +186,7 @@ https://github.com/t3-oss/create-t3-turbo/blob/656965aff7db271e5e080242c4a3ce4da
    ```bash
    // Add the `expo-updates` library to your Expo app
    $ cd apps/expo
-   $ pnpm expo install expo-updates
+   $ yarn expo install expo-updates
 
    // Configure EAS Update
    $ eas update:configure

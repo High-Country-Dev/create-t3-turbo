@@ -6,11 +6,11 @@
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
-    "db:deploy": "pnpm with-env prisma migrate deploy",
-    "db:generate": "pnpm with-env prisma generate",
-    "db:push": "pnpm with-env prisma db push --skip-generate",
-    "db:seed": "pnpm with-env prisma db seed",
-    "dev": "pnpm with-env prisma studio --port 5556",
+    "db:deploy": "yarn with-env prisma migrate deploy",
+    "db:generate": "yarn with-env prisma generate",
+    "db:push": "yarn with-env prisma db push --skip-generate",
+    "db:seed": "yarn with-env prisma db seed",
+    "dev": "yarn with-env prisma studio --port 5556",
     "with-env": "dotenv -e ../../.env --"
   },
   "prisma": {

@@ -38,7 +38,7 @@ const config = {
     'packages/config/**',
     '.next',
     'dist',
-    'pnpm-lock.yaml',
+    'yarn.lock',
   ],
   reportUnusedDisableDirectives: true,
 }
