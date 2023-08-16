@@ -1,9 +1,10 @@
-import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
 
 import "~/styles/globals.css";
 
+import { ThemeProvider } from "~/components/ThemeProvider";
 import { TRPCReactProvider } from "./providers";
 
 const fontSans = Inter({
@@ -32,7 +33,9 @@ export default function Layout(props: { children: React.ReactNode }) {
     <html lang="en">
       <body className={["font-sans", fontSans.variable].join(" ")}>
         <ClerkProvider>
-          <TRPCReactProvider>{props.children}</TRPCReactProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <TRPCReactProvider>{props.children}</TRPCReactProvider>
+          </ThemeProvider>
         </ClerkProvider>
       </body>
     </html>
