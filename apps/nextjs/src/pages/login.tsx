@@ -7,6 +7,8 @@ import { z } from "zod";
 
 import { ControlledComboBox } from "~/components/ControlledFields/ControlledComboBox";
 import { ControlledRadioGroup } from "~/components/ControlledFields/ControlledRadioGroup";
+import { ControlledSlider } from "~/components/ControlledFields/ControlledSlider";
+import { ControlledSwitch } from "~/components/ControlledFields/ControlledSwitch";
 import { ControlledTextField } from "~/components/ControlledFields/ControlledTextField";
 
 const FormSchema = z.object({
@@ -16,6 +18,8 @@ const FormSchema = z.object({
   lastName: z.string().min(5),
   country: z.string().min(5),
   gender: z.string(),
+  age: z.number().array(),
+  notifications: z.boolean(),
 });
 
 const Login = () => {
@@ -28,17 +32,19 @@ const Login = () => {
       lastName: "",
       country: "",
       gender: "",
+      age: [0],
+      notifications: false,
     },
   });
+
   return (
     <div className="mt-50 m-auto max-w-[600px] pt-[50px]">
       <Form {...form}>
-        <ControlledTextField control={form.control} name="firstName" />
-        <ControlledTextField control={form.control} name="lastName" />
-        <ControlledTextField control={form.control} name="email" />
-        <ControlledTextField control={form.control} name="password" />
+        <ControlledTextField name="firstName" />
+        <ControlledTextField name="lastName" />
+        <ControlledTextField name="email" />
+        <ControlledTextField name="password" />
         <ControlledComboBox
-          control={form.control}
           name="country"
           options={[
             {
@@ -56,7 +62,6 @@ const Login = () => {
           ]}
         />
         <ControlledRadioGroup
-          control={form.control}
           name="gender"
           options={[
             {
@@ -72,10 +77,9 @@ const Login = () => {
             className: "flex flex-row",
           }}
         />
-        <Button
-          onClick={form.handleSubmit(() => alert("complete"))}
-          className="mt-5"
-        >
+        <ControlledSlider name="age" step={1} max={50} />
+        <ControlledSwitch name="notifications" />
+        <Button onClick={form.handleSubmit(() => alert())} className="mt-5">
           Submit
         </Button>
       </Form>

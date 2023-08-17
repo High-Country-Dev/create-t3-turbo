@@ -1,19 +1,19 @@
 import React from "react";
 import { FormField, FormItem, FormMessage } from "@/components/ui/form";
-import type { Control, FieldValues, Path } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
+import type { FieldValues, Path } from "react-hook-form";
 
 import type { CustomRadioGroupProps } from "../InputField/CustomRadioGroup";
 import { CustomRadioGroup } from "../InputField/CustomRadioGroup";
 
 export const ControlledRadioGroup = <T extends FieldValues>({
-  control,
   name,
   options,
   ...rest
 }: {
-  control: Control<T>;
   name: Path<T>;
 } & Omit<CustomRadioGroupProps, "onChange" | "value">) => {
+  const { control } = useFormContext();
   return (
     <FormField
       control={control}

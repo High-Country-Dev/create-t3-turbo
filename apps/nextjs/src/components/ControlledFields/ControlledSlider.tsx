@@ -1,3 +1,4 @@
+import React from "react";
 import {
   FormField,
   FormItem,
@@ -7,29 +8,29 @@ import {
 import { useFormContext } from "react-hook-form";
 import type { FieldValues, Path } from "react-hook-form";
 
-import type { TextFieldProps } from "../InputField/CustomTextField";
-import { CustomTextField } from "../InputField/CustomTextField";
+import { CustomSlider } from "../InputField/CustomSlider";
+import type { CustomSliderProps } from "../InputField/CustomSlider";
 
-export const ControlledTextField = <T extends FieldValues>({
+export const ControlledSlider = <T extends FieldValues>({
   name,
   ...props
 }: {
   name: Path<T>;
-} & Omit<TextFieldProps, "onChange" | "value">) => {
+} & Omit<CustomSliderProps, "onChange" | "value" | "onValueChange">) => {
   const { control } = useFormContext();
   return (
     <FormField
-      name={name}
       control={control}
-      render={({ field: { value, onChange } }) => {
+      name={name}
+      render={({ field: { value, onChange, ...fieldRest } }) => {
         return (
           <FormItem>
             <FormLabel />
-            <CustomTextField
-              {...props}
-              name={name}
+            <CustomSlider
               value={value}
-              onChange={(e) => onChange(e.target.value)}
+              {...fieldRest}
+              {...props}
+              onValueChange={onChange}
             />
             <FormMessage />
           </FormItem>

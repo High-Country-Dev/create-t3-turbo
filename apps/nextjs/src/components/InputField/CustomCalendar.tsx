@@ -1,5 +1,5 @@
 import type { LabelHTMLAttributes } from "react";
-import React from "react";
+import React, { useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import type { CalendarProps } from "@/components/ui/calendar";
 import { Calendar } from "@/components/ui/calendar";
@@ -9,19 +9,28 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import type { DateRange, SelectSingleEventHandler } from "react-day-picker";
+import type {
+  DayPickerMultipleProps,
+  DayPickerRangeProps,
+  DayPickerSingleProps,
+} from "react-day-picker";
 
 import { camelCaseToSpacedTitleCase, classNames } from "@acme/shared";
 
-export interface CustomCalendarProps {
+export type CustomCalendarProps = {
   label?: string;
   labelProps?: LabelHTMLAttributes<HTMLLabelElement>;
   inputProps?: CalendarProps;
   containerClassName?: string;
   name: string;
-  onSelect: SelectSingleEventHandler;
-}
+  selected: Date | Date[] | undefined;
+  onSelect?:
+    | Omit<DayPickerSingleProps["onSelect"], "value">
+    | Omit<DayPickerMultipleProps["onSelect"], "value">
+    | Omit<DayPickerRangeProps["onSelect"], "value">;
+} & CalendarProps;
 
 const CustomCalendar = ({
   label,
@@ -31,10 +40,18 @@ const CustomCalendar = ({
   containerClassName,
   onSelect: onChange,
   selected: value,
-}: CustomCalendarProps & CalendarProps) => {
+  mode = "multiple",
+}: CustomCalendarProps) => {
   const { className: labelClassName, ...labelRest } = labelProps ?? {};
   const { className: inputClassName } = inputProps ?? {};
   const usedLabel = label ?? camelCaseToSpacedTitleCase(name ?? "");
+  const valueToString = useMemo(() => {
+    if (!value) return undefined;
+    if (Array.isArray(value))
+      return value.map((a) => format(a as Date, "PPP")).join(" - ");
+    if (value instanceof Date) return format(value, "PPP");
+    return "";
+  }, [value]);
 
   return (
     <div className={containerClassName}>
@@ -51,16 +68,18 @@ const CustomCalendar = ({
               )}
             >
               <CalendarIcon className="mr-2 h-4 w-4" />
-              <span>Pick a date</span>
+              {valueToString ? valueToString : <span>Pick a date</span>}
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0">
             {/* TODO */}
             <Calendar
-              mode={"single"}
+              className={inputClassName}
+              mode={mode}
               selected={value}
-              onSelect={onChange}
               initialFocus
+              //@ts-ignore
+              onSelect={onChange}
             />
           </PopoverContent>
         </Popover>

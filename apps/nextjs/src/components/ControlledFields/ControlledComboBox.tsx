@@ -1,18 +1,18 @@
 import React from "react";
 import { FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { useFormContext } from "react-hook-form";
 import type { Control, FieldValues, Path } from "react-hook-form";
 
 import { CustomComboBox } from "../InputField/CustomComboBox";
 import type { CustomComboBoxProps } from "../InputField/CustomComboBox";
 
 export const ControlledComboBox = <T extends FieldValues>({
-  control,
   name,
   options,
 }: {
-  control: Control<T>;
   name: Path<T>;
 } & Omit<CustomComboBoxProps, "onChange" | "value">) => {
+  const { control } = useFormContext();
   return (
     <FormField
       control={control}

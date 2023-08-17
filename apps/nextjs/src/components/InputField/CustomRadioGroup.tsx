@@ -1,8 +1,4 @@
-import type {
-  ChangeEvent,
-  InputHTMLAttributes,
-  LabelHTMLAttributes,
-} from "react";
+import type { InputHTMLAttributes, LabelHTMLAttributes } from "react";
 import React from "react";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -15,7 +11,7 @@ export interface CustomRadioGroupProps {
   inputProps?: InputHTMLAttributes<HTMLInputElement>;
   containerClassName?: string;
   name: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange: (e: string) => void;
   value: string;
   options: { value: string; label: string }[];
 }
@@ -41,13 +37,17 @@ export const CustomRadioGroup = ({
           {usedLabel}
         </Label>
         <RadioGroup
-          onChange={onChange}
-          defaultValue={value}
+          // onChange={(val) => console.log("asdasdas", val)}
+          value={value}
           className={inputClassName}
         >
           {options.map((option) => (
             <div className="flex items-center space-x-2" key={option.value}>
-              <RadioGroupItem value={option.value} id={option.value} />
+              <RadioGroupItem
+                value={option.value}
+                id={option.value}
+                onClick={() => onChange(option.value)}
+              />
               <Label htmlFor="option-two">{option.label}</Label>
             </div>
           ))}

@@ -1,3 +1,4 @@
+import React from "react";
 import {
   FormField,
   FormItem,
@@ -7,29 +8,30 @@ import {
 import { useFormContext } from "react-hook-form";
 import type { FieldValues, Path } from "react-hook-form";
 
-import type { TextFieldProps } from "../InputField/CustomTextField";
-import { CustomTextField } from "../InputField/CustomTextField";
+import type { CustomSwitchProps } from "../InputField/CustomSwitch";
+import { CustomSwitch } from "../InputField/CustomSwitch";
 
-export const ControlledTextField = <T extends FieldValues>({
+export const ControlledSwitch = <T extends FieldValues>({
   name,
   ...props
 }: {
   name: Path<T>;
-} & Omit<TextFieldProps, "onChange" | "value">) => {
+} & Omit<CustomSwitchProps, "checked" | "onCheckedChange">) => {
   const { control } = useFormContext();
   return (
     <FormField
       name={name}
       control={control}
-      render={({ field: { value, onChange } }) => {
+      render={({ field: { value, onChange, ...fieldRest } }) => {
         return (
           <FormItem>
             <FormLabel />
-            <CustomTextField
+            <CustomSwitch
               {...props}
+              {...fieldRest}
+              onCheckedChange={onChange}
+              checked={value}
               name={name}
-              value={value}
-              onChange={(e) => onChange(e.target.value)}
             />
             <FormMessage />
           </FormItem>

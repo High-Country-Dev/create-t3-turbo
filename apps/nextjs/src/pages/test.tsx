@@ -13,7 +13,7 @@ import { ControlledTextField } from "~/components/ControlledFields/ControlledTex
 const FormSchema = z.object({
   inputText: z.string().min(10),
   checkbox: z.boolean(),
-  calendar: z.date(),
+  calendar: z.date().array(),
 });
 
 const Test = () => {
@@ -25,7 +25,7 @@ const Test = () => {
       calendar: undefined,
     },
   });
-  const { control, watch, handleSubmit } = form;
+  const { watch, handleSubmit } = form;
   const inputText = watch("inputText");
   const checkbox = watch("checkbox");
   const calendar = watch("calendar");
@@ -37,14 +37,13 @@ const Test = () => {
           <Form {...form}>
             <Label className="text-lg font-bold">Inputs:</Label>
             <ControlledTextField
-              control={control}
               name={"inputText"}
               inputProps={{
                 placeholder: "Input text here",
               }}
             />
-            <ControlledCheckbox control={control} name="checkbox" />
-            <ControlledCalendar control={control} name="calendar" />
+            <ControlledCheckbox name="checkbox" />
+            <ControlledCalendar name="calendar" mode="multiple" />
             <Button onClick={handleSubmit((errors) => console.log({ errors }))}>
               Submit
             </Button>
@@ -53,7 +52,7 @@ const Test = () => {
         <div className="flex w-[600px] flex-col gap-3">
           <Label className="text-lg font-bold">Values:</Label>
           <div>{inputText}</div>
-          <div>{checkbox.toString()}</div>
+          <div>{checkbox?.toString()}</div>
           <div>{calendar?.toString()}</div>
         </div>
       </div>

@@ -5,18 +5,19 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import type { Control, FieldValues, Path } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
+import type { FieldValues, Path } from "react-hook-form";
 
 import type { CustomCalendarProps } from "../InputField/CustomCalendar";
 import { CustomCalendar } from "../InputField/CustomCalendar";
 
 export const ControlledCalendar = <T extends FieldValues>({
-  control,
   name,
+  ...props
 }: {
-  control: Control<T>;
   name: Path<T>;
 } & Omit<CustomCalendarProps, "onSelect" | "selected">) => {
+  const { control } = useFormContext();
   return (
     <FormField
       name={name}
@@ -26,9 +27,10 @@ export const ControlledCalendar = <T extends FieldValues>({
           <FormItem>
             <FormLabel />
             <CustomCalendar
-              {...fieldRest}
               selected={value}
               onSelect={onChange}
+              {...fieldRest}
+              {...props}
             />
             <FormMessage />
           </FormItem>
