@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MouseEventHandler, useState } from "react";
 import {
   Table,
   TableBody,
@@ -8,11 +8,20 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { format } from "date-fns";
+
+export interface HeaderData {
+  label: string;
+  dataType: string;
+  clickable: boolean;
+  tooltip: string;
+  onClick?: MouseEventHandler<HTMLTableCellElement>;
+}
 
 export interface CustomTable {
-  headers: string[];
+  headers: HeaderData[];
   caption: string;
-  contents: Record<string, any>;
+  contents: Record<string, string | number | Date>[];
   containerClassName: string;
 }
 
@@ -34,25 +43,29 @@ export const CustomTable = ({
                 className={`font-medium ${
                   index === headers.length - 1 ? "text-right" : ""
                 }`}
+                onClick={header.clickable ? header.onClick : () => {}}
+                title={header.tooltip}
               >
-                {header}
+                {header.label}
               </TableHead>
             ))}
           </TableRow>
         </TableHeader>
         <TableBody>
-          {contents.map((content: any, rowIndex: number) => (
+          {contents.map((content, rowIndex) => (
             <TableRow key={rowIndex}>
-              {Object.keys(content).map((propertyKey, columnIndex: number) => (
+              {Object.entries(content).map(([propKey, value], columnIndex) => (
                 <TableCell
-                  key={propertyKey}
+                  key={columnIndex}
                   className={`font-medium ${
                     columnIndex === Object.keys(content).length - 1
                       ? "text-right"
                       : ""
                   }`}
                 >
-                  {content[propertyKey]}
+                  {value instanceof Date
+                    ? format(value, "MMMM dd, yyyy")
+                    : value}
                 </TableCell>
               ))}
             </TableRow>
