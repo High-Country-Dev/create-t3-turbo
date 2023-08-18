@@ -6,6 +6,7 @@ import { useForm, UseFormReturn } from "react-hook-form";
 import { z } from "zod";
 
 import { ControlledTextField } from "~/components/ControlledFields/ControlledTextField";
+import { CustomAlertDialog } from "~/components/InputField/CustomAlertDialog";
 import { CustomDialog } from "~/components/InputField/CustomDialog";
 
 const FormSchema = z.object({
@@ -24,20 +25,37 @@ const Dialog = () => {
     },
   });
 
-  const [open, setOpen] = useState(false);
-  const Button1 = () => {
-    return (
-      <Button
-        onClick={form.handleSubmit(() => alert("complete"))}
-        className="mt-10"
-      >
-        Save Changes
-      </Button>
-    );
+  const cancelButton = {
+    label: "Cancel",
+    onClick: () => alert("cancel"),
+    // className: "w-[50px]",
   };
+  const continueButton = {
+    label: "Continue",
+    onClick: () => alert("continue"),
+    // className: "w-[100px]",
+  };
+  const [open, setOpen] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
 
+  const alertDialogDescription =
+    "This action cannot be undone. This will permanently delete your " +
+    "account and remove your data from our servers.";
   return (
     <div className="mt-50 m-auto pt-[50px] ">
+      {/* CustomAlertDialog */}
+      <Button onClick={() => setOpenAlert(true)}>Open Alert Dialog</Button>
+      <CustomAlertDialog
+        open={openAlert}
+        onOpenChange={setOpenAlert}
+        title="Are you absolutely sure?"
+        description={alertDialogDescription}
+        contentClassName="flex flex-col items-center justify-center"
+        cancelButton={cancelButton}
+        continueButton={continueButton}
+      ></CustomAlertDialog>
+
+      {/* CustomDialog */}
       <Button onClick={() => setOpen(true)}>Open Dialog</Button>
       <CustomDialog
         open={open}
