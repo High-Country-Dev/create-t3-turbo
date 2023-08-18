@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,6 +24,7 @@ const Dialog = () => {
     },
   });
 
+  const [open, setOpen] = useState(false);
   const Button1 = () => {
     return (
       <Button
@@ -36,22 +37,35 @@ const Dialog = () => {
   };
 
   return (
-    <div className="mt-50 m-auto max-w-[600px] pt-[50px] ">
+    <div className="mt-50 m-auto pt-[50px] ">
+      <Button onClick={() => setOpen(true)}>Open Dialog</Button>
       <CustomDialog
-        buttonProps={{
-          className: "bg-red-400",
-          name: "Edit Profile",
-        }}
-        contentClassName="sm:max-w-[425px]"
-        footer={Button1()}
+        open={open}
+        onOpenChange={setOpen}
+        modal={true}
         title="Dialog Title"
-        description="Dialog Description"
+        contentClassName="flex flex-col items-center justify-center"
+        footerButtons={[
+          {
+            label: "OK",
+            onClick: () => alert("test"),
+            className: "w-[50px]",
+          },
+          {
+            label: "GOOD",
+            onClick: () => alert("test"),
+            className: "w-[100px]",
+            variant: "outline",
+          },
+        ]}
       >
-        <Form {...form}>
-          <ControlledTextField control={form.control} name="firstName" />
-          <ControlledTextField control={form.control} name="lastName" />
-          <ControlledTextField control={form.control} name="email" />
-        </Form>
+        <div className="w-[300px]">
+          <Form {...form}>
+            <ControlledTextField name="firstName" />
+            <ControlledTextField name="lastName" />
+            <ControlledTextField name="email" />
+          </Form>
+        </div>
       </CustomDialog>
     </div>
   );

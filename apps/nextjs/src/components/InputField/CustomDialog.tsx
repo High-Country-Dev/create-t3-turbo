@@ -1,50 +1,71 @@
-import React, { ButtonHTMLAttributes, ReactNode } from "react";
+import type { ReactNode } from "react";
+import React from "react";
+import type { ButtonProps } from "@/components/ui/button";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
 
+type DialogProps = React.ComponentProps<typeof Dialog>;
+
+type FooterButtonProps = ButtonProps & {
+  label: string;
+};
 export interface CustomDialog {
   title: string;
-  description: string;
-  containerClassName?: string;
   children: ReactNode;
-  contentClassName: string;
-  buttonProps: ButtonHTMLAttributes<HTMLButtonElement>;
-  footer: React.JSX.Element | string;
+  contentClassName?: string;
+  footerButtons?: FooterButtonProps[];
+  footerClassName?: string;
 }
 
 export const CustomDialog = ({
   title,
-  description,
-  footer,
   children,
-  buttonProps,
   contentClassName,
-}: CustomDialog) => {
-  const { className: buttonClassName, name: buttonName } = buttonProps ?? {};
-
+  open,
+  onOpenChange,
+  footerClassName,
+  footerButtons = [
+    {
+      label: "OK",
+      variant: "default",
+      onClick: () => onOpenChange?.(false),
+    },
+  ],
+}: CustomDialog & DialogProps) => {
   return (
-    <div className="containerClassName">
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button className={buttonClassName}>{buttonName}</Button>
-        </DialogTrigger>
-        <DialogContent className={contentClassName}>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className={contentClassName}>
+        {title && (
           <DialogHeader>
             <DialogTitle>{title}</DialogTitle>
-            <DialogDescription>{description}</DialogDescription>
             {children}
           </DialogHeader>
-          <DialogFooter>{footer}</DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </div>
+        )}
+        <DialogFooter
+          className={cn(
+            "flex flex-row justify-end gap-1",
+            footerClassName,
+            "w-full",
+          )}
+        >
+          {footerButtons?.map((button) => (
+            <Button
+              variant={button.variant ?? "default"}
+              key={button.label}
+              {...button}
+            >
+              {button.label}
+            </Button>
+          ))}
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 };
