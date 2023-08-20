@@ -7,6 +7,7 @@ import { z } from "zod";
 
 import { ControlledComboBox } from "~/components/ControlledFields/ControlledComboBox";
 import { ControlledRadioGroup } from "~/components/ControlledFields/ControlledRadioGroup";
+import { ControlledSelect } from "~/components/ControlledFields/ControlledSelect";
 import { ControlledSlider } from "~/components/ControlledFields/ControlledSlider";
 import { ControlledSwitch } from "~/components/ControlledFields/ControlledSwitch";
 import { ControlledTextField } from "~/components/ControlledFields/ControlledTextField";
@@ -20,6 +21,7 @@ const FormSchema = z.object({
   gender: z.string(),
   age: z.number().array(),
   notifications: z.boolean(),
+  city: z.string(),
 });
 
 const Login = () => {
@@ -34,6 +36,7 @@ const Login = () => {
       gender: "",
       age: [0],
       notifications: false,
+      city: "",
     },
   });
 
@@ -76,6 +79,19 @@ const Login = () => {
           inputProps={{
             className: "flex flex-row",
           }}
+        />
+        <ControlledSelect
+          name="city"
+          options={[
+            {
+              value: "QC",
+              label: "Quezon City",
+            },
+            {
+              value: "M",
+              label: "Manila",
+            },
+          ]}
         />
         <ControlledSlider name="age" step={1} max={50} />
         <ControlledSwitch name="notifications" />
