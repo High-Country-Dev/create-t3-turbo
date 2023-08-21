@@ -1,6 +1,7 @@
 import type { InputHTMLAttributes, LabelHTMLAttributes } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
 import type { CheckedState } from "@radix-ui/react-checkbox";
 
 import { camelCaseToSpacedTitleCase, classNames } from "@acme/shared";
@@ -29,8 +30,8 @@ export const CustomCheckbox = ({
   const usedLabel = label ?? camelCaseToSpacedTitleCase(name ?? "");
 
   return (
-    <div className={containerClassName}>
-      <div className="grid w-full max-w-sm items-center gap-1.5">
+    <div className={cn(containerClassName, "mt-1")}>
+      <div className="grid w-full items-center gap-1.5">
         <Label htmlFor="name" className={labelClassName} {...labelRest}>
           {usedLabel}
         </Label>

@@ -2,6 +2,7 @@ import type { InputHTMLAttributes, LabelHTMLAttributes } from "react";
 import React from "react";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { cn } from "@/lib/utils";
 
 import { camelCaseToSpacedTitleCase } from "@acme/shared";
 
@@ -31,8 +32,8 @@ export const CustomRadioGroup = ({
   const { className: inputClassName } = inputProps ?? {};
 
   return (
-    <div className={containerClassName}>
-      <div className="grid w-full max-w-sm items-center gap-1.5">
+    <div className={cn(containerClassName, "mt-1")}>
+      <div className="grid w-full items-center gap-1.5">
         <Label htmlFor="name" className={labelClassName} {...labelRest}>
           {usedLabel}
         </Label>

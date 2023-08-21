@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { ControlledCalendar } from "~/components/ControlledFields/ControlledCalendar";
 import { ControlledComboBox } from "~/components/ControlledFields/ControlledComboBox";
 import { ControlledRadioGroup } from "~/components/ControlledFields/ControlledRadioGroup";
 import { ControlledSelect } from "~/components/ControlledFields/ControlledSelect";
@@ -22,6 +23,7 @@ const FormSchema = z.object({
   age: z.number().array(),
   notifications: z.boolean(),
   city: z.string(),
+  dateOfBirth: z.date(),
 });
 
 const Login = () => {
@@ -37,16 +39,15 @@ const Login = () => {
       age: [0],
       notifications: false,
       city: "",
+      dateOfBirth: undefined,
     },
   });
 
   return (
-    <div className="mt-50 m-auto max-w-[600px] pt-[50px]">
+    <div className="mt-50 m-auto flex max-w-[600px] flex-col gap-3 pt-[50px]">
       <Form {...form}>
         <ControlledTextField name="firstName" />
-        <ControlledTextField name="lastName" />
-        <ControlledTextField name="email" />
-        <ControlledTextField name="password" />
+        <ControlledCalendar name="dateOfBirth" mode="single" />
         <ControlledComboBox
           name="country"
           options={[

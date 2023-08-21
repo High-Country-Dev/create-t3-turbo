@@ -34,7 +34,7 @@ export const CustomTextField = ({
 
   return (
     <div className={containerClassName}>
-      <div className="grid w-full max-w-sm items-center gap-1.5">
+      <div className="grid w-full items-center gap-1.5">
         <Label htmlFor="name" className={labelClassName} {...labelRest}>
           {usedLabel}
         </Label>
