@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -9,23 +9,18 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import type { ButtonProps } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 type AlertDialogProps = React.ComponentProps<typeof AlertDialog>;
-
-type FooterButton = {
-  label: string;
-  onClick: () => void;
-  className?: string;
-};
 
 export interface AlertDialog {
   title: string;
   description: string;
   contentClassName?: string;
   footerClassName?: string;
-  cancelButton?: FooterButton;
-  continueButton?: FooterButton;
+  cancelButton?: ButtonProps & { label: string };
+  confirmButton?: ButtonProps & { label: string };
 }
 
 export const CustomAlertDialog = ({
@@ -35,14 +30,8 @@ export const CustomAlertDialog = ({
   open,
   onOpenChange,
   footerClassName,
-  cancelButton = {
-    label: "Cancel",
-    onClick: () => alert("cancel"),
-  },
-  continueButton = {
-    label: "Continue",
-    onClick: () => alert("Continue"),
-  },
+  cancelButton,
+  confirmButton,
 }: AlertDialog & AlertDialogProps) => {
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
@@ -58,18 +47,24 @@ export const CustomAlertDialog = ({
             "w-full",
           )}
         >
-          <AlertDialogCancel
-            onClick={cancelButton?.onClick}
-            className={cancelButton?.className}
-          >
-            {cancelButton?.label}
-          </AlertDialogCancel>
-          <AlertDialogAction
-            onClick={continueButton?.onClick}
-            className={continueButton?.className}
-          >
-            {continueButton?.label}
-          </AlertDialogAction>
+          {cancelButton && (
+            <AlertDialogCancel
+              onClick={cancelButton?.onClick}
+              className={cancelButton?.className}
+              {...cancelButton}
+            >
+              {cancelButton?.label}
+            </AlertDialogCancel>
+          )}
+          {confirmButton && (
+            <AlertDialogAction
+              onClick={confirmButton?.onClick}
+              className={confirmButton?.className}
+              {...confirmButton}
+            >
+              {confirmButton?.label}
+            </AlertDialogAction>
+          )}
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
