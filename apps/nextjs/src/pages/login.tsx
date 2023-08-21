@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { ControlledCalendar } from "~/components/ControlledFields/ControlledCalendar";
+import { ControlledCheckbox } from "~/components/ControlledFields/ControlledCheckbox";
 import { ControlledComboBox } from "~/components/ControlledFields/ControlledComboBox";
 import { ControlledRadioGroup } from "~/components/ControlledFields/ControlledRadioGroup";
 import { ControlledSelect } from "~/components/ControlledFields/ControlledSelect";
@@ -22,6 +23,7 @@ const FormSchema = z.object({
   gender: z.string(),
   age: z.number().array(),
   notifications: z.boolean(),
+  emailNotif: z.boolean(),
   city: z.string(),
   dateOfBirth: z.date(),
 });
@@ -40,6 +42,7 @@ const Login = () => {
       notifications: false,
       city: "",
       dateOfBirth: undefined,
+      emailNotif: false,
     },
   });
 
@@ -95,6 +98,7 @@ const Login = () => {
           ]}
         />
         <ControlledSlider name="age" step={1} max={50} />
+        <ControlledCheckbox name="emailNotif" label="Email Notifications" />
         <ControlledSwitch name="notifications" />
         <Button onClick={form.handleSubmit(() => alert())} className="mt-5">
           Submit

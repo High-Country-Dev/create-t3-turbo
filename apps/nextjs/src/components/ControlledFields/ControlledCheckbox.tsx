@@ -1,13 +1,14 @@
 import React from "react";
 import { FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { useFormContext } from "react-hook-form";
-import type { Control, FieldValues, Path } from "react-hook-form";
+import type {  FieldValues, Path } from "react-hook-form";
 
 import type { CheckboxProps } from "../Custom/CustomCheckbox";
 import { CustomCheckbox } from "../Custom/CustomCheckbox";
 
 export const ControlledCheckbox = <T extends FieldValues>({
   name,
+  ...props,
 }: {
   name: Path<T>;
 } & Omit<CheckboxProps, "onChange" | "value">) => {
@@ -19,7 +20,12 @@ export const ControlledCheckbox = <T extends FieldValues>({
       render={({ field: { value, onChange, ...fieldRest } }) => {
         return (
           <FormItem>
-            <CustomCheckbox {...fieldRest} value={value} onChange={onChange} />
+            <CustomCheckbox
+              {...fieldRest}
+              value={value}
+              onChange={onChange}
+              {...props}
+            />
             <FormMessage />
           </FormItem>
         );
