@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, UseFormReturn } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { ControlledTextField } from "~/components/ControlledFields/ControlledTextField";
@@ -28,12 +28,10 @@ const Dialog = () => {
   const cancelButton = {
     label: "Cancel",
     onClick: () => alert("cancel"),
-    // className: "w-[50px]",
   };
   const continueButton = {
     label: "Continue",
     onClick: () => alert("continue"),
-    // className: "w-[100px]",
   };
   const [open, setOpen] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
@@ -43,7 +41,6 @@ const Dialog = () => {
     "account and remove your data from our servers.";
   return (
     <div className="mt-50 m-auto pt-[50px] ">
-      {/* CustomAlertDialog */}
       <Button onClick={() => setOpenAlert(true)}>Open Alert Dialog</Button>
       <CustomAlertDialog
         open={openAlert}
@@ -52,7 +49,7 @@ const Dialog = () => {
         description={alertDialogDescription}
         contentClassName="flex flex-col items-center justify-center"
         cancelButton={cancelButton}
-        continueButton={continueButton}
+        confirmButton={continueButton}
       ></CustomAlertDialog>
 
       {/* CustomDialog */}
