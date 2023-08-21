@@ -8,8 +8,8 @@ import {
 import { useFormContext } from "react-hook-form";
 import type { FieldValues, Path } from "react-hook-form";
 
-import { CustomSlider } from "../InputField/CustomSlider";
-import type { CustomSliderProps } from "../InputField/CustomSlider";
+import { CustomSlider } from "../Custom/CustomSlider";
+import type { CustomSliderProps } from "../Custom/CustomSlider";
 
 export const ControlledSlider = <T extends FieldValues>({
   name,

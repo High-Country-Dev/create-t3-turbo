@@ -3,8 +3,8 @@ import { FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { useFormContext } from "react-hook-form";
 import type { Control, FieldValues, Path } from "react-hook-form";
 
-import type { CheckboxProps } from "../InputField/CustomCheckbox";
-import { CustomCheckbox } from "../InputField/CustomCheckbox";
+import type { CheckboxProps } from "../Custom/CustomCheckbox";
+import { CustomCheckbox } from "../Custom/CustomCheckbox";
 
 export const ControlledCheckbox = <T extends FieldValues>({
   name,

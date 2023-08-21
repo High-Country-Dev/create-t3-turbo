@@ -8,8 +8,8 @@ import {
 import { useFormContext } from "react-hook-form";
 import type { FieldValues, Path } from "react-hook-form";
 
-import type { CustomSwitchProps } from "../InputField/CustomSwitch";
-import { CustomSwitch } from "../InputField/CustomSwitch";
+import type { CustomSwitchProps } from "../Custom/CustomSwitch";
+import { CustomSwitch } from "../Custom/CustomSwitch";
 
 export const ControlledSwitch = <T extends FieldValues>({
   name,

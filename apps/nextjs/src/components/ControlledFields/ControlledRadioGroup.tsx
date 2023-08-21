@@ -3,8 +3,8 @@ import { FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { useFormContext } from "react-hook-form";
 import type { FieldValues, Path } from "react-hook-form";
 
-import type { CustomRadioGroupProps } from "../InputField/CustomRadioGroup";
-import { CustomRadioGroup } from "../InputField/CustomRadioGroup";
+import type { CustomRadioGroupProps } from "../Custom/CustomRadioGroup";
+import { CustomRadioGroup } from "../Custom/CustomRadioGroup";
 
 export const ControlledRadioGroup = <T extends FieldValues>({
   name,

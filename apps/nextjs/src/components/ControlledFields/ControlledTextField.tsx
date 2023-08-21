@@ -7,8 +7,8 @@ import {
 import { useFormContext } from "react-hook-form";
 import type { FieldValues, Path } from "react-hook-form";
 
-import type { TextFieldProps } from "../InputField/CustomTextField";
-import { CustomTextField } from "../InputField/CustomTextField";
+import type { TextFieldProps } from "../Custom/CustomTextField";
+import { CustomTextField } from "../Custom/CustomTextField";
 
 export const ControlledTextField = <T extends FieldValues>({
   name,

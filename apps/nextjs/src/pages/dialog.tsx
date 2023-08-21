@@ -6,8 +6,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { ControlledTextField } from "~/components/ControlledFields/ControlledTextField";
-import { CustomAlertDialog } from "~/components/InputField/CustomAlertDialog";
-import { CustomDialog } from "~/components/InputField/CustomDialog";
+import { CustomAlertDialog } from "~/components/Custom/CustomAlertDialog";
+import { CustomDialog } from "~/components/Custom/CustomDialog";
 
 const FormSchema = z.object({
   firstName: z.string(),

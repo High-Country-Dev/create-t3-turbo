@@ -8,8 +8,8 @@ import {
 import { useFormContext } from "react-hook-form";
 import type { FieldValues, Path } from "react-hook-form";
 
-import type { CustomCalendarProps } from "../InputField/CustomCalendar";
-import { CustomCalendar } from "../InputField/CustomCalendar";
+import type { CustomCalendarProps } from "../Custom/CustomCalendar";
+import { CustomCalendar } from "../Custom/CustomCalendar";
 
 export const ControlledCalendar = <T extends FieldValues>({
   name,

@@ -3,8 +3,8 @@ import { FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { useFormContext } from "react-hook-form";
 import type { FieldValues, Path } from "react-hook-form";
 
-import { CustomSelect } from "../InputField/CustomSelect";
-import type { CustomSelectProps } from "../InputField/CustomSelect";
+import { CustomSelect } from "../Custom/CustomSelect";
+import type { CustomSelectProps } from "../Custom/CustomSelect";
 
 export const ControlledSelect = <T extends FieldValues>({
   name,

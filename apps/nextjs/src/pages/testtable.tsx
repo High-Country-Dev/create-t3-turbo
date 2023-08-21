@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import type { ColumnDef } from "@tanstack/react-table";
 
-import { CustomTable } from "~/components/InputField/CustomTable";
+import { CustomTable } from "~/components/Custom/CustomTable";
 
 const TestTable = () => {
   interface DataType {
